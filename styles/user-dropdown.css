@@ -1,0 +1,148 @@
+/* Estilos para el dropdown de usuario */
+.user-dropdown {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    width: 240px;
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 1100;
+    padding: var(--spacing-md);
+    display: none;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity var(--transition-normal), transform var(--transition-normal);
+}
+
+.user-dropdown.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.user-dropdown-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.user-dropdown-title {
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-lg);
+    margin: 0;
+    color: var(--color-text) !important;
+}
+
+.user-close {
+    cursor: pointer;
+    font-size: var(--font-size-xl);
+    color: var(--color-text-light) !important;
+    transition: color var(--transition-normal);
+}
+
+.user-close:hover {
+    color: var(--color-primary) !important;
+}
+
+.user-dropdown-content {
+    padding: var(--spacing-sm) 0;
+}
+
+.user-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.user-buttons .btn {
+    width: 100%;
+    text-align: center;
+}
+
+/* Garantizar colores correctos para los botones */
+.user-dropdown .btn-outline {
+    background-color: transparent;
+    color: var(--color-primary) !important;
+    border: 2px solid var(--color-primary);
+}
+
+.user-dropdown .btn-outline:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white) !important;
+}
+
+.user-dropdown .btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-white) !important;
+    border: none;
+}
+
+.user-dropdown .btn-primary:hover {
+    background-color: var(--color-primary-dark);
+}
+
+/* Estilos para overlay de fondo */
+.user-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+    display: none;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.user-overlay.active {
+    display: block;
+    opacity: 1;
+}
+
+/* Asegurar que cuando la navbar no tiene scroll, el dropdown tenga fondo blanco */
+.navbar:not(.navbar-scrolled) .user-dropdown {
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Media queries para responsive */
+@media (max-width: 576px) {
+    .user-dropdown {
+        position: fixed;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
+        transform: translateY(100%);
+        max-height: 80vh;
+    }
+
+    .user-dropdown.active {
+        transform: translateY(0);
+    }
+
+    .user-dropdown-header {
+        padding: var(--spacing-md);
+        margin-bottom: 0;
+    }
+
+    .user-dropdown-content {
+        padding: var(--spacing-md);
+    }
+
+    .user-buttons .btn {
+        padding: var(--spacing-md);
+    }
+
+    /* Permitir scroll cuando el drawer del usuario está abierto */
+    body.user-open {
+        overflow: hidden;
+    }
+}

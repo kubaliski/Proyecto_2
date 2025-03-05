@@ -1,0 +1,660 @@
+/* Estilos para sección de productos y filtros */
+
+/* Layout base para la tienda */
+.shop-container {
+    padding: var(--spacing-md) 0;
+}
+
+/* Sección de productos */
+.products-container {
+    width: 100%;
+}
+
+/* Grid de productos */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+/* Tarjeta de producto */
+.product-card {
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Contenedor de imagen */
+.product-image {
+    position: relative;
+    padding-top: 100%; /* Aspecto cuadrado 1:1 */
+    overflow: hidden;
+    background-color: #f5f5f5;
+}
+
+.product-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-normal);
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.05);
+}
+
+/* Badge de descuento */
+.product-discount {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    font-weight: var(--font-weight-bold);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-sm);
+    z-index: 1;
+}
+
+/* Badge de producto destacado */
+.product-featured-badge {
+    position: absolute;
+    top: var(--spacing-sm);
+    left: var(--spacing-sm);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    font-weight: var(--font-weight-bold);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-sm);
+    z-index: 1;
+}
+
+/* Información del producto */
+.product-info {
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    flex: 1;
+}
+
+.product-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    margin: 0;
+    line-height: 1.3;
+}
+
+.product-brand {
+    color: var(--color-text-light);
+    font-size: var(--font-size-sm);
+}
+
+.product-category {
+    display: inline-block;
+    background-color: var(--color-background);
+    color: var(--color-text-light);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--spacing-xs);
+}
+
+/* Precio */
+.product-price-container {
+    margin: var(--spacing-sm) 0;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.product-price {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+}
+
+.product-price-original {
+    text-decoration: line-through;
+    color: var(--color-text-light);
+    font-size: var(--font-size-sm);
+}
+
+/* Color del producto */
+.product-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--color-white);
+    box-shadow: 0 0 0 1px var(--color-border);
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Botón de añadir al carrito */
+.product-add-cart {
+    margin-top: auto;
+    width: 100%;
+}
+
+/* Productos destacados */
+.product-featured {
+    border: 2px solid var(--color-primary);
+}
+
+/* Cabecera de productos */
+.products-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.products-count {
+    font-size: var(--font-size-md);
+}
+
+.products-count strong {
+    color: var(--color-primary);
+    font-weight: var(--font-weight-bold);
+}
+
+.products-sort {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.products-sort label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+}
+
+.products-sort select {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    background-color: var(--color-white);
+    font-size: var(--font-size-sm);
+}
+
+/* Estilos de Drawer para filtros */
+.filters-drawer {
+    position: fixed;
+    top: 0;
+    right: -450px; /* Abre desde la derecha */
+    width: 450px;
+    max-width: 90vw;
+    height: 100vh;
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-lg);
+    z-index: 1100;
+    transition: right var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+}
+
+.filters-drawer.active {
+    right: 0;
+}
+
+.filters-drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.filters-drawer-header h3 {
+    margin: 0;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+}
+
+.filters-drawer-close {
+    font-size: var(--font-size-xxl);
+    cursor: pointer;
+    color: var(--color-text);
+    line-height: 1;
+}
+
+.filters-drawer-content {
+    padding: var(--spacing-md) var(--spacing-lg);
+    overflow-y: auto;
+    flex: 1;
+}
+
+.filters-drawer-footer {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+.filters-drawer-footer .btn {
+    flex: 1;
+}
+
+/* Estilos para filtros */
+.filter-section {
+    margin-bottom: var(--spacing-lg);
+}
+
+.filter-section-title {
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Estilos para los checkboxes */
+.filter-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-xs);
+    cursor: pointer;
+}
+
+.filter-checkbox input[type="checkbox"] {
+    margin-right: var(--spacing-sm);
+}
+
+/* Filtro de colores */
+.filter-color {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-xs);
+    cursor: pointer;
+}
+
+.color-circle {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: var(--spacing-sm);
+    border: 1px solid var(--color-border);
+}
+
+.color-name {
+    font-size: var(--font-size-sm);
+}
+
+/* Rango de precios */
+.price-range {
+    margin-top: var(--spacing-sm);
+}
+
+.price-inputs {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-xs);
+}
+
+.price-inputs input {
+    flex: 1;
+    padding: var(--spacing-xs);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+}
+
+/* Botón para filtrar en móvil */
+.mobile-filter-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: background-color var(--transition-normal);
+}
+
+.mobile-filter-button:hover {
+    background-color: var(--color-background);
+}
+
+.mobile-filter-button svg {
+    margin-right: var(--spacing-xs);
+}
+
+/* Etiquetas de filtros activos */
+.active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+}
+
+.filter-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-sm);
+}
+
+.filter-tag-remove {
+    cursor: pointer;
+    font-weight: var(--font-weight-bold);
+    opacity: 0.8;
+}
+
+.filter-tag-remove:hover {
+    opacity: 1;
+}
+
+/* Mensaje de no productos */
+.no-products {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--color-text-light);
+    font-size: var(--font-size-lg);
+    grid-column: 1 / -1;
+}
+
+/* Notificación */
+.notification {
+    position: fixed;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+    z-index: 1100;
+    transition: bottom var(--transition-normal);
+}
+
+.notification-show {
+    bottom: var(--spacing-lg);
+}
+
+/* Media queries para responsive */
+
+@media (max-width: 1200px) {
+    .products-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .mobile-filter-button {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .filters-drawer {
+        width: 350px;
+    }
+
+    .products-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-md);
+    }
+
+    .products-sort {
+        width: 100%;
+    }
+
+    .products-sort select {
+        flex: 1;
+    }
+
+    .filters-drawer-footer {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 576px) {
+    /* Ajuste de grid para pantallas pequeñas */
+    .products-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+        padding: 0 var(--spacing-sm);
+    }
+
+    /* Tarjeta de producto más ancha en móvil */
+    .product-card {
+        max-width: 100%; /* Cambiado de 350px a 100% para usar todo el ancho disponible */
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    /* Ajuste de la imagen para mantener relación de aspecto pero ser más compacta */
+    .product-image {
+        padding-top: 75%; /* Cambiado de 100% (cuadrado) a 75% (más rectangular) */
+    }
+
+    /* Mejora de la información del producto para dispositivos móviles */
+    .product-info {
+        padding: var(--spacing-md) var(--spacing-lg);
+    }
+
+    /* Ajustar tamaño del título para móviles */
+    .product-title {
+        font-size: var(--font-size-md);
+    }
+
+    /* Hacer los precios más visibles */
+    .product-price {
+        font-size: var(--font-size-xl);
+    }
+
+    /* Mejorar apariencia del botón en móvil */
+    .product-add-cart {
+        padding: var(--spacing-sm) var(--spacing-md);
+        margin-top: var(--spacing-md);
+    }
+
+    .products-count,
+    .products-sort {
+        width: 100%;
+    }
+
+    .products-sort {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+
+    .products-sort select {
+        width: 100%;
+    }
+
+    .active-filters {
+        margin-top: var(--spacing-md);
+    }
+
+    /* Drawer a pantalla completa en móvil */
+    .filters-drawer {
+        width: 100%;
+        max-width: 100%;
+        right: -100%;
+        top: 0;
+        height: 100vh;
+        z-index: 1200;
+        border-radius: 0;
+    }
+
+    .filters-drawer.active {
+        right: 0;
+    }
+
+    .filters-drawer-header {
+        padding: var(--spacing-md);
+        position: sticky;
+        top: 0;
+        background-color: var(--color-white);
+        z-index: 10;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .filters-drawer-content {
+        padding: var(--spacing-md);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch; /* Para mejor scroll en iOS */
+    }
+
+    .filters-drawer-footer {
+        padding: var(--spacing-md);
+        position: sticky;
+        bottom: 0;
+        background-color: var(--color-white);
+        box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+
+    .filters-drawer-footer .btn {
+        width: 100%;
+        padding: var(--spacing-sm) 0;
+    }
+
+    /* Ajustes para mostrar mejor el contenido */
+    .filter-section {
+        margin-bottom: var(--spacing-md);
+        padding-bottom: var(--spacing-md);
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .filter-section:last-child {
+        border-bottom: none;
+    }
+
+    /* Hacer los checkboxes y elementos de filtro más grandes para mejor interacción táctil */
+    .filter-checkbox,
+    .filter-color {
+        padding: var(--spacing-xs) 0;
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .filter-checkbox input[type="checkbox"],
+    .filter-color input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+    }
+
+    .color-circle {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* Ajuste para inputs de precio */
+    .price-inputs {
+        flex-direction: row;
+    }
+
+    .price-inputs input {
+        padding: var(--spacing-sm);
+        font-size: var(--font-size-md);
+        height: 44px;
+    }
+
+    /* Mejora para el botón móvil de filtros */
+    .mobile-filter-button {
+        width: 100%;
+        padding: var(--spacing-md);
+        justify-content: center;
+        font-size: var(--font-size-md);
+        border-radius: var(--border-radius-md);
+        margin-bottom: var(--spacing-lg);
+    }
+
+    /* Cuando el drawer está abierto, prevenir scroll en el body */
+    body.menu-open {
+        overflow: hidden;
+    }
+
+    /* Overlay más oscuro para mejor contraste */
+    .menu-overlay.active {
+        background-color: rgba(0, 0, 0, 0.7);
+        z-index: 1150;
+    }
+}
+
+/* Ajustes para tablets pequeñas */
+@media (min-width: 577px) and (max-width: 767px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-md);
+    }
+
+    .product-card {
+        /* Ajuste para que tengan un tamaño consistente */
+        height: 100%;
+    }
+}
+
+/* Ajuste para orientación horizontal en móviles */
+@media (max-width: 767px) and (orientation: landscape) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .product-image {
+        padding-top: 70%; /* Ligeramente más achatado para orientación horizontal */
+    }
+
+    .product-info {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+}
+
+/* Orientación horizontal en dispositivos móviles para filtros */
+@media (max-height: 500px) and (orientation: landscape) {
+    .filters-drawer-content {
+        padding-bottom: var(--spacing-xl);
+    }
+
+    .filters-drawer-footer {
+        flex-direction: row;
+    }
+
+    /* Disposición horizontal de filtros para mejor uso del espacio */
+    .filter-section {
+        margin-bottom: var(--spacing-sm);
+    }
+}

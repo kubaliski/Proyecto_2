@@ -1,0 +1,74 @@
+:root {
+    /* Colores principales */
+    --color-primary: #6B0F1A;
+    --color-primary-dark: #470a11;
+    --color-primary-rgb: 107, 15, 26; /* Valor RGB para usar con rgba() */
+    --color-secondary: #ff6b00;
+    --color-secondary-dark: #e65100;
+    --color-secondary-rgb: 255, 107, 0; /* Valor RGB para usar con rgba() */
+
+    /* Colores neutros */
+    --color-text: #333333;
+    --color-text-light: #666666;
+    --color-background: #fafafa;
+    --color-white: #ffffff;
+    --color-border: #dddddd;
+
+    /* Colores de estado */
+    --color-success: #28a745;
+    --color-warning: #ffc107;
+    --color-danger: #dc3545;
+    --color-info: #17a2b8;
+
+    /* Tipografía */
+    --font-primary: 'Arial', sans-serif;
+    --font-secondary: 'Helvetica', sans-serif;
+
+    /* Tamaños de fuente */
+    --font-size-xs: 0.75rem;   /* 12px */
+    --font-size-sm: 0.875rem;  /* 14px */
+    --font-size-md: 1rem;      /* 16px (base) */
+    --font-size-lg: 1.125rem;  /* 18px */
+    --font-size-xl: 1.25rem;   /* 20px */
+    --font-size-xxl: 1.5rem;   /* 24px */
+    --font-size-xxxl: 2rem;    /* 32px */
+
+    /* Pesos de fuente */
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 700;
+
+    /* Espaciado */
+    --spacing-xs: 0.25rem;    /* 4px */
+    --spacing-sm: 0.5rem;     /* 8px */
+    --spacing-md: 1rem;       /* 16px */
+    --spacing-lg: 1.5rem;     /* 24px */
+    --spacing-xl: 2rem;       /* 32px */
+    --spacing-xxl: 3rem;      /* 48px */
+
+    /* Bordes */
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 16px;
+    --border-width: 1px;
+
+    /* Sombras */
+    --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+    /* Transiciones */
+    --transition-fast: 0.2s;
+    --transition-normal: 0.3s;
+    --transition-slow: 0.5s;
+
+    /* Breakpoints para media queries */
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+
+    /* Anchos del contenedor */
+    --container-max-width: 1200px;
+    --container-padding: 15px;
+}

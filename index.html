@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiTienda - Tienda Online de Zapatillas</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/products.css">
+    <link rel="stylesheet" href="styles/cart-dropdown.css">
+</head>
+<body>
+    <!-- Navbar actualizada -->
+    <header class="navbar" id="navbar">
+        <div class="container">
+            <!-- Lado izquierdo: menú hamburguesa y marca -->
+            <div class="navbar-left">
+                <div class="navbar-brand">
+                    <a href="#">MiTienda</a>
+                </div>
+            </div>
+
+            <!-- Lado derecho: iconos -->
+            <div class="navbar-right">
+                <div class="navbar-icons">
+                    <a href="#" class="navbar-icon search-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </a>
+                    <a href="#" class="navbar-icon filter-icon" id="filter-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="4" y1="21" x2="4" y2="14"></line>
+                            <line x1="4" y1="10" x2="4" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12" y2="3"></line>
+                            <line x1="20" y1="21" x2="20" y2="16"></line>
+                            <line x1="20" y1="12" x2="20" y2="3"></line>
+                            <line x1="1" y1="14" x2="7" y2="14"></line>
+                            <line x1="9" y1="8" x2="15" y2="8"></line>
+                            <line x1="17" y1="16" x2="23" y2="16"></line>
+                        </svg>
+                    </a>
+                    <a href="#" class="navbar-icon user-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+
+                        <!-- User dropdown -->
+                        <div class="user-dropdown" id="user-dropdown">
+                            <div class="user-dropdown-header">
+                                <h3 class="user-dropdown-title">Mi cuenta</h3>
+                                <div class="user-close" id="user-close">&times;</div>
+                            </div>
+                            <div class="user-dropdown-content">
+                                <div class="user-buttons">
+                                    <a href="#" class="btn btn-primary">Iniciar sesión</a>
+                                    <a href="#" class="btn btn-outline">Registrarse</a>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="navbar-icon cart-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <path d="M16 10a4 4 0 0 1-8 0"></path>
+                        </svg>
+                        <span class="cart-count">0</span>
+
+                        <!-- Carrito desplegable -->
+                        <div class="cart-dropdown" id="cart-dropdown">
+                            <div class="cart-dropdown-header">
+                                <h3 class="cart-dropdown-title">Carrito</h3>
+                                <div class="cart-close" id="cart-close">&times;</div>
+                            </div>
+                            <div class="cart-items" id="cart-items">
+                                <!-- Los items del carrito se generarán dinámicamente -->
+                                <div class="empty-cart">Tu carrito está vacío</div>
+                            </div>
+                            <div class="cart-footer">
+                                <div class="cart-total">
+                                    <span class="cart-total-title">Total:</span>
+                                    <span class="cart-total-amount" id="cart-total">0.00 €</span>
+                                </div>
+                                <div class="cart-buttons">
+                                    <a href="#" class="btn btn-outline">Ver carrito</a>
+                                    <a href="#" class="btn btn-primary">Comprar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Overlay de fondo oscuro -->
+            <div class="menu-overlay" id="menu-overlay"></div>
+            <!-- Overlay para el user dropdown -->
+            <div class="user-overlay" id="user-overlay"></div>
+            <!-- Overlay para el carrito -->
+            <div class="cart-overlay" id="cart-overlay"></div>
+
+            <!-- Filtros en drawer lateral -->
+            <aside class="filters-drawer" id="filters-drawer">
+                <div class="filters-drawer-header">
+                    <h3>Filtros</h3>
+                    <div class="filters-drawer-close" id="filters-drawer-close">&times;</div>
+                </div>
+                <div class="filters-drawer-content">
+                    <form id="filters-form">
+                        <!-- Filtro de categorías -->
+                        <div class="filter-section">
+                            <div class="filter-section-title">Categorías</div>
+                            <div id="categorias-filter">
+                                <!-- Generado dinámicamente con JS -->
+                            </div>
+                        </div>
+
+                        <!-- Filtro de marcas -->
+                        <div class="filter-section">
+                            <div class="filter-section-title">Marcas</div>
+                            <div id="marcas-filter">
+                                <!-- Generado dinámicamente con JS -->
+                            </div>
+                        </div>
+
+                        <!-- Filtro de colores -->
+                        <div class="filter-section">
+                            <div class="filter-section-title">Colores</div>
+                            <div id="colores-filter">
+                                <!-- Generado dinámicamente con JS -->
+                            </div>
+                        </div>
+
+                        <!-- Filtro de precio -->
+                        <div class="filter-section">
+                            <div class="filter-section-title">Precio</div>
+                            <div class="price-range">
+                                <div class="price-inputs">
+                                    <input type="number" name="precio-min" placeholder="Min €" min="0">
+                                    <input type="number" name="precio-max" placeholder="Max €" min="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Filtro de destacados -->
+                        <div class="filter-section">
+                            <label class="filter-checkbox">
+                                <input type="checkbox" name="destacados">
+                                <span class="checkbox-text">Solo destacados</span>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+                <div class="filters-drawer-footer">
+                    <button id="apply-filters" class="btn btn-primary">Aplicar filtros</button>
+                    <button id="clear-filters" class="btn btn-outline">Limpiar filtros</button>
+                </div>
+            </aside>
+        </div>
+    </header>
+
+    <main class="site-main">
+        <!-- Hero con video de fondo -->
+        <section class="hero video-hero">
+            <div class="video-container">
+                <video
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    id="hero-video"
+                    poster="assets/video/poster.jpg"
+                    preload="auto">
+                    <source src="assets/video/hero_video.mp4" type="video/mp4">
+                    <!-- Fuente alternativa en caso de que MP4 no sea soportado -->
+                    <source src="assets/video/hero_video.webm" type="video/webm">
+                    <!-- Fallback si el video no carga -->
+                    Tu navegador no soporta videos HTML5.
+                </video>
+
+                <!-- Overlay para mejorar la legibilidad del texto -->
+                <div class="video-overlay"></div>
+            </div>
+
+            <div class="hero-content container">
+                <h1 class="hero-title">Descubre nuestra colección</h1>
+                <p class="hero-subtitle">Zapatillas de calidad que marcan tendencia</p>
+                <div class="hero-buttons">
+                    <a href="#productos" class="btn btn-primary">Ver productos</a>
+                    <a href="#benefits" class="btn btn-outline">Saber más</a>
+                </div>
+            </div>
+
+            <!-- Flecha de scroll down para indicar que hay más contenido -->
+            <div class="scroll-indicator">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <polyline points="19 12 12 19 5 12"></polyline>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Sección de Productos -->
+        <section id="productos" class="section">
+            <div class="container">
+                <h2 class="text-center mb-4">Nuestra Colección de Zapatillas</h2>
+
+                <!-- Botón para filtrar en móvil -->
+                <button id="mobile-filter-button" class="mobile-filter-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="4" y1="21" x2="4" y2="14"></line>
+                        <line x1="4" y1="10" x2="4" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12" y2="3"></line>
+                        <line x1="20" y1="21" x2="20" y2="16"></line>
+                        <line x1="20" y1="12" x2="20" y2="3"></line>
+                        <line x1="1" y1="14" x2="7" y2="14"></line>
+                        <line x1="9" y1="8" x2="15" y2="8"></line>
+                        <line x1="17" y1="16" x2="23" y2="16"></line>
+                    </svg>
+                    Filtrar
+                </button>
+
+                <!-- Contenedor principal de tienda -->
+                <div class="shop-container">
+                    <!-- Sección de productos -->
+                    <div class="products-container">
+                        <!-- Header con conteo y ordenamiento -->
+                        <div class="products-header">
+                            <div class="products-count">
+                                <span>Mostrando <strong id="results-count">0</strong> productos</span>
+                            </div>
+                            <div class="products-sort">
+                                <label for="sort-select">Ordenar por:</label>
+                                <select id="sort-select">
+                                    <option value="destacados">Destacados</option>
+                                    <option value="precio-asc">Precio: menor a mayor</option>
+                                    <option value="precio-desc">Precio: mayor a menor</option>
+                                    <option value="nombre-asc">Nombre: A-Z</option>
+                                    <option value="nombre-desc">Nombre: Z-A</option>
+                                    <option value="descuento">Mayor descuento</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Active filters tags -->
+                        <div id="active-filters" class="active-filters">
+                            <!-- Los filtros activos se mostrarán aquí -->
+                        </div>
+
+                        <!-- Grid de productos (generado dinámicamente con JS) -->
+                        <div id="products-grid" class="products-grid">
+                            <!-- Aquí se cargarán los productos dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de beneficios -->
+        <section class="benefits-section" id="benefits">
+            <div class="container">
+                <h2 class="text-center mb-5">Nuestros beneficios</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="benefit-item text-center">
+                            <div class="benefit-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                            </div>
+                            <h3>Envío rápido</h3>
+                            <p>Recibe tus zapatillas en 24-48h en toda la península</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="benefit-item text-center">
+                            <div class="benefit-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                </svg>
+                            </div>
+                            <h3>Calidad garantizada</h3>
+                            <p>Solo trabajamos con marcas de primera calidad</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="benefit-item text-center">
+                            <div class="benefit-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                            </div>
+                            <h3>Devoluciones gratuitas</h3>
+                            <p>30 días para devoluciones sin coste adicional</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Columna 1: Información y Newsletter -->
+                <div class="footer-column footer-column-large">
+                    <div class="footer-logo">MiTienda</div>
+                    <p class="footer-description">Las mejores zapatillas del mercado al mejor precio.</p>
+
+                    <div class="newsletter-section">
+                        <h3 class="footer-title">Newsletter</h3>
+                        <p>Suscríbete y obtén un 10% de descuento en tu primera compra.</p>
+                        <form class="newsletter-form">
+                            <div class="newsletter-form-group">
+                                <input type="email" placeholder="Tu email" class="newsletter-input" required>
+                                <button type="submit" class="newsletter-button btn btn-primary">Suscribirme</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Columna 2: Enlaces legales -->
+                <div class="footer-column">
+                    <h3 class="footer-title">Legal</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Aviso legal</a></li>
+                        <li><a href="#">Política de privacidad</a></li>
+                        <li><a href="#">Política de cookies</a></li>
+                        <li><a href="#">Términos y condiciones</a></li>
+                    </ul>
+                </div>
+
+                <!-- Columna 3: Información de contacto -->
+                <div class="footer-column">
+                    <h3 class="footer-title">Contacto</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
+                            <span>Calle Comercio, 23<br>28012 Madrid, España</span>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                            <span>+34 912 345 678</span>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            <span>info@mitienda.com</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Columna 4: Redes sociales -->
+                <div class="footer-column">
+                    <h3 class="footer-title">Síguenos</h3>
+                    <div class="footer-social">
+                        <a href="#" class="social-icon" aria-label="Facebook">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon" aria-label="YouTube">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="copyright">&copy; 2025 MiTienda. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/navbar.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/user.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/products.js"></script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+/* Estilos para la navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: var(--spacing-md) 0;
+    transition: all var(--transition-normal);
+    background-color: transparent;
+    box-shadow: none;
+}
+
+/* Navbar con fondo al hacer scroll */
+.navbar-scrolled {
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-sm);
+    padding: var(--spacing-sm) 0;
+}
+
+/* Contenedor de la navbar */
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* Lado izquierdo: marca */
+.navbar-left {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 1;
+}
+
+/* Logo o nombre de la tienda */
+.navbar-brand a {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    transition: color var(--transition-normal);
+}
+
+.navbar-brand a:hover {
+    color: var(--color-primary-dark);
+}
+
+/* Lado derecho: iconos */
+.navbar-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 1;
+}
+
+.navbar-icons {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xl);
+}
+
+.navbar-icon {
+    position: relative;
+    color: var(--color-text);
+    transition: color var(--transition-normal);
+}
+
+.navbar-icon:hover {
+    color: var(--color-primary);
+}
+
+/* Badge para contador de carrito */
+.cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: var(--color-secondary);
+    color: white;
+    font-size: var(--font-size-xs);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-bold);
+}
+
+/* Estados diferentes según si la navbar es transparente o con fondo */
+.navbar:not(.navbar-scrolled) .navbar-brand a,
+.navbar:not(.navbar-scrolled) .navbar-icon {
+    color: var(--color-white);
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+    /* Mantener un espacio adecuado entre iconos en móvil */
+    .navbar-icons {
+        gap: var(--spacing-lg);
+    }
+
+    .navbar {
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    /* Asegurar que el scrolling aplica fondo en móvil */
+    .navbar.navbar-scrolled {
+        background-color: var(--color-white);
+        box-shadow: var(--shadow-sm);
+    }
+
+    /* Mantener colores claros cuando no hay scroll */
+    .navbar:not(.navbar-scrolled) .navbar-brand a,
+    .navbar:not(.navbar-scrolled) .navbar-icon {
+        color: var(--color-white);
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-icons {
+        gap: var(--spacing-md);
+    }
+}

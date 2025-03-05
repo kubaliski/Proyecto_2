@@ -1,0 +1,157 @@
+/* Estilos para elementos de formulario con color primario */
+
+/* Estilos base para todos los inputs */
+input {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    transition: all var(--transition-normal);
+    font-size: var(--font-size-sm);
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.1);
+}
+
+/* Estilos para checkboxes */
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--color-border);
+    border-radius: 3px;
+    background-color: var(--color-white);
+    position: relative;
+    cursor: pointer;
+    vertical-align: middle;
+    transition: all var(--transition-normal);
+    padding: 0;
+}
+
+input[type="checkbox"]:checked {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid var(--color-white);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+input[type="checkbox"]:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.3);
+}
+
+input[type="checkbox"]:hover:not(:checked) {
+    border-color: var(--color-primary);
+}
+
+/* Estilos para inputs de número */
+input[type="number"] {
+    -moz-appearance: textfield; /* Uso Firefox yo se que en las clases dijimos de haer las cosas para chrome */
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Estilos para inputs de email */
+input[type="email"] {
+    min-width: 200px;
+}
+
+/* Estilos para inputs del footer (newsletter) - más específico para sobrescribir otros estilos */
+.footer-column .newsletter-form-group input,
+.newsletter-input {
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--border-radius-sm) 0 0 var(--border-radius-sm) !important;
+    padding: var(--spacing-sm) var(--spacing-md) !important;
+    font-size: var(--font-size-md) !important;
+}
+
+.footer-column .newsletter-form-group input:focus,
+.newsletter-input:focus {
+    outline: none !important;
+    border-color: var(--color-primary) !important;
+    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.1) !important;
+}
+
+/* Estilos para selects */
+select {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-xs) var(--spacing-md);
+    padding-right: var(--spacing-xl);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b0f1a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--spacing-sm) center;
+    background-size: 16px;
+    font-size: var(--font-size-sm);
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.1);
+}
+
+select:hover {
+    border-color: var(--color-primary);
+}
+
+/* Inputs de rango de precio en el drawer de filtros */
+.price-inputs input {
+    flex: 1;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+}
+
+.price-inputs input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.1);
+}
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 576px) {
+    input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+    }
+
+    input[type="checkbox"]:checked::after {
+        left: 6px;
+        top: 2px;
+        width: 6px;
+        height: 12px;
+    }
+
+    select {
+        padding: var(--spacing-sm) var(--spacing-lg);
+        font-size: var(--font-size-md);
+    }
+
+    .price-inputs input {
+        padding: var(--spacing-sm);
+        height: 40px;
+        font-size: var(--font-size-md);
+    }
+}

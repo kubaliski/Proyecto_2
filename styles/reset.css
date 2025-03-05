@@ -1,0 +1,73 @@
+/* Reset */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Eliminar estilos predeterminados para elementos comunes */
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-regular);
+    line-height: 1.6;
+    color: var(--color-text);
+    background-color: var(--color-background);
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: var(--font-weight-bold);
+    margin: 0;
+    line-height: 1.2;
+}
+
+p {
+    margin: 0;
+}
+
+ul, ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img, picture, svg {
+    max-width: 100%;
+    display: block;
+}
+
+input, button, textarea, select {
+    font: inherit;
+    color: inherit;
+    border: none;
+    background: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* Evitar problemas con textarea */
+textarea {
+    resize: vertical;
+}
+
+/* Eliminar estilos de número en inputs */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
