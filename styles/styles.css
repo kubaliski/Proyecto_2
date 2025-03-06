@@ -5,6 +5,7 @@
 @import url('buttons.css');
 @import url('layout.css');
 @import url('navbar.css');
+@import url('search-dropdown.css');
 @import url('user-dropdown.css');
 @import url('cart-dropdown.css');
 @import url('hero.css');
@@ -229,3 +230,65 @@
 /* Visibilidad */
 .visible { visibility: visible; }
 .invisible { visibility: hidden; }
+
+/*
+   Me estoy volviendo loco para sobreescribir el texto blanco de la navbar en el top para el imput text de la busqueda
+   ES FEO Y LO SIENTO
+*/
+
+/* Selector universal con la especificidad más alta posible */
+html body header.navbar .navbar-right .navbar-icons .navbar-icon.search-icon .search-dropdown .search-form input.search-input,
+html body .navbar:not(.navbar-scrolled) .search-dropdown .search-form input.search-input,
+html body .search-dropdown .search-form input.search-input,
+html body input.search-input,
+.search-input {
+    /* Colores del texto y fondo */
+    color: #333333 !important;
+    background-color: #ffffff !important;
+    -webkit-text-fill-color: #333333 !important;
+    -moz-text-fill-color: #333333 !important;
+    -ms-text-fill-color: #333333 !important;
+
+
+    /* Color del cursor */
+    caret-color: #333333 !important;
+
+    /* Eliminar cualquier sombra o efecto de texto */
+    text-shadow: none !important;
+
+    /* Asegurar visibilidad */
+    opacity: 1 !important;
+
+    /* Bordes claros */
+    border: 1px solid #dddddd !important;
+
+    /* Eliminar efectos de transparencia */
+    -webkit-background-clip: padding-box !important;
+    background-clip: padding-box !important;
+}
+
+/* Selector específico para el placeholder */
+input.search-input::placeholder,
+.search-input::placeholder {
+    color: #666666 !important;
+    -webkit-text-fill-color: #666666 !important;
+    opacity: 0.8 !important;
+}
+
+/* Para cubrir cualquier alteración dinámica */
+[type="search"],
+[type="text"],
+[class*="search"] input {
+    color: #333333 !important;
+    background-color: #ffffff !important;
+    -webkit-text-fill-color: #333333 !important;
+}
+
+/* Fuerza el color como ÚLTIMO RECURSO */
+@keyframes forceTextColor {
+    from, to { color: #333333 !important; -webkit-text-fill-color: #333333 !important; }
+}
+
+.search-input {
+    animation: forceTextColor 0.1s forwards !important;
+}
