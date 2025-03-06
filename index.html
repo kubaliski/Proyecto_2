@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MiTienda - Tienda Online de Zapatillas</title>
+    <title>ECO Step - Tienda Online de Zapatillas</title>
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/products.css">
     <link rel="stylesheet" href="styles/cart-dropdown.css">
@@ -15,7 +15,7 @@
             <!-- Lado izquierdo: menú hamburguesa y marca -->
             <div class="navbar-left">
                 <div class="navbar-brand">
-                    <a href="#">MiTienda</a>
+                    <a href="#">ECO Step</a>
                 </div>
             </div>
 
@@ -226,12 +226,46 @@
                         <img src="assets/campaign/city_sneakers_4.png" alt="Zapatillas tendencia urbana" class="back-to-city-image">
                     </div>
                 </div>
+                <div class="carousel">
+                    <div class="carousel-container" id="city-carousel">
+                        <div class="carousel-item">
+                            <img src="assets/campaign/city_sneakers_1.png" alt="Zapatillas urbanas para primavera">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="assets/campaign/city_sneakers_2.png" alt="Zapatillas deportivas para ciudad">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="assets/campaign/city_sneakers_3.png" alt="Zapatillas elegantes para ciudad">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="assets/campaign/city_sneakers_4.png" alt="Zapatillas tendencia urbana">
+                        </div>
+                    </div>
+                    <div class="carousel-controls">
+                        <button class="carousel-control prev-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="15 18 9 12 15 6"></polyline>
+                            </svg>
+                        </button>
+                        <button class="carousel-control next-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="carousel-dots" id="carousel-dots">
+                        <span class="carousel-dot active"></span>
+                        <span class="carousel-dot"></span>
+                        <span class="carousel-dot"></span>
+                        <span class="carousel-dot"></span>
+                    </div>
+                </div>
             </div>
         </section>
         <!-- Sección de Productos -->
         <section id="productos" class="section">
             <div class="container">
-                <h2 class="text-center mb-4">Nuestra Colección de Zapatillas</h2>
+                <h2 class="products-title-inline">NUESTRA <span class="highlight">COLECCIÓN</span></h2>
 
                 <!-- Botón para filtrar en móvil -->
                 <button id="mobile-filter-button" class="mobile-filter-button">
@@ -253,7 +287,7 @@
                 <div class="shop-container">
                     <!-- Sección de productos -->
                     <div class="products-container">
-                        <!-- Header con conteo y ordenamiento -->
+                        <!-- Header con número de productos -->
                         <div class="products-header">
                             <div class="products-count">
                                 <span>Mostrando <strong id="results-count">0</strong> productos</span>
@@ -271,7 +305,7 @@
                             </div>
                         </div>
 
-                        <!-- Active filters tags -->
+                        <!-- Los filtros activos se mostrarán aquí -->
                         <div id="active-filters" class="active-filters">
                             <!-- Los filtros activos se mostrarán aquí -->
                         </div>
@@ -289,43 +323,38 @@
         <section class="benefits-section" id="benefits">
             <div class="container">
                 <h2 class="text-center mb-5">Nuestros beneficios</h2>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="benefit-item text-center">
-                            <div class="benefit-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <polyline points="12 6 12 12 16 14"></polyline>
-                                </svg>
-                            </div>
-                            <h3>Envío rápido</h3>
-                            <p>Recibe tus zapatillas en 24-48h en toda la península</p>
+
+                <div class="benefits-container">
+                    <div class="benefit-item text-center">
+                        <div class="benefit-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
                         </div>
+                        <h3>Envío rápido</h3>
+                        <p>Recibe tus zapatillas en 24-48h en toda la península</p>
                     </div>
 
-                    <div class="col-md-4">
-                        <div class="benefit-item text-center">
-                            <div class="benefit-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-                                </svg>
-                            </div>
-                            <h3>Calidad garantizada</h3>
-                            <p>Solo trabajamos con marcas de primera calidad</p>
+                    <div class="benefit-item text-center">
+                        <div class="benefit-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                            </svg>
                         </div>
+                        <h3>Calidad garantizada</h3>
+                        <p>Solo trabajamos con marcas de primera calidad</p>
                     </div>
 
-                    <div class="col-md-4">
-                        <div class="benefit-item text-center">
-                            <div class="benefit-icon">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                                    <circle cx="12" cy="10" r="3"></circle>
-                                </svg>
-                            </div>
-                            <h3>Devoluciones gratuitas</h3>
-                            <p>30 días para devoluciones sin coste adicional</p>
+                    <div class="benefit-item text-center">
+                        <div class="benefit-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                <circle cx="12" cy="10" r="3"></circle>
+                            </svg>
                         </div>
+                        <h3>Devoluciones gratuitas</h3>
+                        <p>30 días para devoluciones sin coste adicional</p>
                     </div>
                 </div>
             </div>
@@ -337,7 +366,7 @@
             <div class="footer-content">
                 <!-- Columna 1: Información y Newsletter -->
                 <div class="footer-column footer-column-large">
-                    <div class="footer-logo">MiTienda</div>
+                    <div class="footer-logo">ECO Step</div>
                     <p class="footer-description">Las mejores zapatillas del mercado al mejor precio.</p>
 
                     <div class="newsletter-section">
@@ -385,7 +414,7 @@
                                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                                 <polyline points="22,6 12,13 2,6"></polyline>
                             </svg>
-                            <span>info@mitienda.com</span>
+                            <span>info@ecostep.com</span>
                         </li>
                     </ul>
                 </div>
@@ -416,7 +445,7 @@
             </div>
 
             <div class="footer-bottom">
-                <p class="copyright">&copy; 2025 MiTienda. Todos los derechos reservados.</p>
+                <p class="copyright">&copy; 2025 ECO Step. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
@@ -426,6 +455,7 @@
     <script src="js/main.js"></script>
     <script src="js/user.js"></script>
     <script src="js/cart.js"></script>
+    <script src="js/carousel.js"></script>
     <script src="js/products.js"></script>
 </body>
 </html>

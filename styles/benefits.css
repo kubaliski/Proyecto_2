@@ -56,6 +56,56 @@
     transform: scale(1.05);
 }
 
+/* Estilos base para móvil - elementos en columna y centrados */
+.benefits-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.benefit-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    width: 100%;
+    max-width: 350px;
+}
+
+/* Estilos para tablet (768px y más) - 2 en primera fila, 1 en segunda */
+@media (min-width: 768px) {
+    .benefits-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .benefit-item {
+        width: 45%; /* Para que quepan 2 en una fila */
+        margin: 0 2.5% var(--spacing-lg);
+    }
+
+    /* El tercer elemento va solo en la segunda fila */
+    .benefit-item:nth-child(3) {
+        width: 45%;
+    }
+}
+
+/* Para pantallas más grandes - opcional, por si quieres 3 en línea */
+@media (min-width: 992px) {
+    .benefit-item {
+        width: 30%; /* Para que quepan 3 en una fila */
+        margin: 0 1.5% var(--spacing-lg);
+    }
+
+    /* Eliminar el estilo especial para el tercer elemento */
+    .benefit-item:nth-child(3) {
+        width: 30%;
+    }
+}
+
 @media (max-width: 768px) {
     .benefits-section {
         padding: var(--spacing-xl) 0;
@@ -64,5 +114,27 @@
     .benefit-item {
         padding: var(--spacing-md);
         margin-bottom: var(--spacing-lg);
+    }
+}
+
+/* Asegura que en tablet el tercer elemento va centrado en una nueva fila */
+@media (min-width: 768px) and (max-width: 991px) {
+    .benefits-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .benefit-item {
+        width: 45%;
+        margin: 0 2.5% var(--spacing-lg);
+    }
+
+    /* El tercer elemento va solo en la segunda fila y centrado */
+    .benefit-item:nth-child(3) {
+        width: 45%;
+        margin-left: auto;
+        margin-right: auto;
     }
 }

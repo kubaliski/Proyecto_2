@@ -59,7 +59,9 @@ input[type="checkbox"]:hover:not(:checked) {
 
 /* Estilos para inputs de número */
 input[type="number"] {
-    -moz-appearance: textfield; /* Uso Firefox yo se que en las clases dijimos de haer las cosas para chrome */
+    -webkit-appearance: textfield; /* Chrome/Safari/Opera */
+    -moz-appearance: textfield; /* Firefox */
+    appearance: textfield; /* Standard property */
 }
 
 input[type="number"]::-webkit-inner-spin-button,

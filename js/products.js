@@ -22,7 +22,7 @@ const productos = [
         color: '#000000',  // negro
         colorNombre: 'negro',
         destacado: true,
-        imagen: 'assets/products/shoe1.jpg',
+        imagen: 'assets/products/shoe_1.png',
         marca: 'SportMax'
     },
     {
@@ -34,7 +34,7 @@ const productos = [
         color: '#FFFFFF',  // blanco
         colorNombre: 'blanco',
         destacado: false,
-        imagen: 'assets/products/shoe2.jpg',
+        imagen: 'assets/products/shoe_2.png',
         marca: 'UrbanStep'
     },
     {
@@ -46,7 +46,7 @@ const productos = [
         color: '#008000',  // verde
         colorNombre: 'verde',
         destacado: true,
-        imagen: 'assets/products/shoe3.jpg',
+        imagen: 'assets/products/shoe_3.png',
         marca: 'OutdoorPro'
     },
     {
@@ -58,7 +58,7 @@ const productos = [
         color: '#000000',  // negro
         colorNombre: 'negro',
         destacado: false,
-        imagen: 'assets/products/shoe4.jpg',
+        imagen: 'assets/products/shoe_4.png',
         marca: 'ClassicStyle'
     },
     {
@@ -70,7 +70,7 @@ const productos = [
         color: '#0000FF',  // azul
         colorNombre: 'azul',
         destacado: true,
-        imagen: 'assets/products/shoe5.jpg',
+        imagen: 'assets/products/shoe_5.png',
         marca: 'UrbanStep'
     },
     {
@@ -82,7 +82,7 @@ const productos = [
         color: '#FF0000',  // rojo
         colorNombre: 'rojo',
         destacado: true,
-        imagen: 'assets/products/shoe6.jpg',
+        imagen: 'assets/products/shoe_6.png',
         marca: 'SportMax'
     },
     {
@@ -94,7 +94,7 @@ const productos = [
         color: '#A52A2A',  // marrón
         colorNombre: 'marron',
         destacado: false,
-        imagen: 'assets/products/shoe7.jpg',
+        imagen: 'assets/products/shoe_7.png',
         marca: 'OutdoorPro'
     },
     {
@@ -106,7 +106,7 @@ const productos = [
         color: '#A52A2A',  // marrón
         colorNombre: 'marron',
         destacado: true,
-        imagen: 'assets/products/shoe8.jpg',
+        imagen: 'assets/products/shoe_8.png',
         marca: 'ClassicStyle'
     },
     {
@@ -118,20 +118,8 @@ const productos = [
         color: '#FFFF00',  // amarillo
         colorNombre: 'amarillo',
         destacado: false,
-        imagen: 'assets/products/shoe9.jpg',
+        imagen: '',//vacío a proposito para mostrar el fallback en caso de que no haya imagen
         marca: 'SummerFeel'
-    },
-    {
-        id: 10,
-        nombre: 'Winter Proof X1',
-        precio: 169.99,
-        descuento: 25,
-        categoria: 'trail',
-        color: '#000000',  // negro
-        colorNombre: 'negro',
-        destacado: true,
-        imagen: 'assets/products/shoe10.jpg',
-        marca: 'OutdoorPro'
     },
 ];
 

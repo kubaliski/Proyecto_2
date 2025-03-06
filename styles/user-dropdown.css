@@ -2,7 +2,7 @@
 .user-dropdown {
     position: absolute;
     top: 40px;
-    right: 0;
+    right: 50px;
     width: 240px;
     background-color: var(--color-white);
     border-radius: var(--border-radius-md);
