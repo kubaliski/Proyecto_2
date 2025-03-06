@@ -1,6 +1,7 @@
 /* Importar archivos CSS en orden correcto */
 @import url('variables.css');
 @import url('reset.css');
+@import url('product-detail.css');
 @import url('form-controls.css');
 @import url('buttons.css');
 @import url('layout.css');
@@ -13,6 +14,8 @@
 @import url('products.css');
 @import url('benefits.css');
 @import url('footer.css');
+
+@import url('product-detail.css');
 
 /* Utilidades generales de texto */
 .text-center { text-align: center; }

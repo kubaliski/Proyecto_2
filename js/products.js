@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Array con datos de productos
+// Array con datos de productos
 const productos = [
     {
         id: 1,
@@ -23,7 +24,8 @@ const productos = [
         colorNombre: 'negro',
         destacado: true,
         imagen: 'assets/products/shoe_1.png',
-        marca: 'SportMax'
+        marca: 'SportMax',
+        stock: 15  // Añadido stock como número
     },
     {
         id: 2,
@@ -35,7 +37,8 @@ const productos = [
         colorNombre: 'blanco',
         destacado: false,
         imagen: 'assets/products/shoe_2.png',
-        marca: 'UrbanStep'
+        marca: 'UrbanStep',
+        stock: 20
     },
     {
         id: 3,
@@ -47,7 +50,8 @@ const productos = [
         colorNombre: 'verde',
         destacado: true,
         imagen: 'assets/products/shoe_3.png',
-        marca: 'OutdoorPro'
+        marca: 'OutdoorPro',
+        stock: 8  // Pocas unidades
     },
     {
         id: 4,
@@ -59,7 +63,8 @@ const productos = [
         colorNombre: 'negro',
         destacado: false,
         imagen: 'assets/products/shoe_4.png',
-        marca: 'ClassicStyle'
+        marca: 'ClassicStyle',
+        stock: 0  // Sin stock
     },
     {
         id: 5,
@@ -71,7 +76,8 @@ const productos = [
         colorNombre: 'azul',
         destacado: true,
         imagen: 'assets/products/shoe_5.png',
-        marca: 'UrbanStep'
+        marca: 'UrbanStep',
+        stock: 12
     },
     {
         id: 6,
@@ -83,7 +89,8 @@ const productos = [
         colorNombre: 'rojo',
         destacado: true,
         imagen: 'assets/products/shoe_6.png',
-        marca: 'SportMax'
+        marca: 'SportMax',
+        stock: 25
     },
     {
         id: 7,
@@ -95,7 +102,8 @@ const productos = [
         colorNombre: 'marron',
         destacado: false,
         imagen: 'assets/products/shoe_7.png',
-        marca: 'OutdoorPro'
+        marca: 'OutdoorPro',
+        stock: 5  // Pocas unidades
     },
     {
         id: 8,
@@ -107,7 +115,8 @@ const productos = [
         colorNombre: 'marron',
         destacado: true,
         imagen: 'assets/products/shoe_8.png',
-        marca: 'ClassicStyle'
+        marca: 'ClassicStyle',
+        stock: 18
     },
     {
         id: 9,
@@ -118,8 +127,9 @@ const productos = [
         color: '#FFFF00',  // amarillo
         colorNombre: 'amarillo',
         destacado: false,
-        imagen: '',//vacío a proposito para mostrar el fallback en caso de que no haya imagen
-        marca: 'SummerFeel'
+        imagen: '',  // vacío a propósito para mostrar el fallback en caso de que no haya imagen
+        marca: 'SummerFeel',
+        stock: 0  // Sin stock
     },
 ];
 
@@ -234,6 +244,16 @@ function generarProductoTemplate(producto) {
                 <img src="${producto.imagen}" alt="${producto.nombre}" onerror="this.src='assets/products/shoe-placeholder.png'">
                 ${producto.descuento > 0 ? `<span class="product-discount">-${producto.descuento}%</span>` : ''}
                 ${producto.destacado ? '<span class="product-featured-badge">Destacado</span>' : ''}
+
+                <!-- Nueva lupa de vista de detalle -->
+                <a href="producto.html?id=${producto.id}" class="product-detail-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        <line x1="11" y1="8" x2="11" y2="14"></line>
+                        <line x1="8" y1="11" x2="14" y2="11"></line>
+                    </svg>
+                </a>
             </div>
             <div class="product-info">
                 <h3 class="product-title">${producto.nombre}</h3>

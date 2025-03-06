@@ -98,3 +98,17 @@
 .video-play-btn:hover {
     background-color: rgba(0, 0, 0, 0.9);
 }
+
+/* Estilo para el botón deshabilitado cuando un producto está agotado */
+.btn-disabled,
+.btn-disabled:hover,
+.btn-disabled:focus,
+.btn-disabled:active {
+    background-color: var(--color-text-light);
+    border-color: var(--color-text-light);
+    color: var(--color-white);
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
