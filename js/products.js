@@ -166,6 +166,15 @@ function setupFilterDrawer() {
         body.classList.remove('menu-open');
     }
 
+    // Función para alternar el estado del drawer
+    function toggleFilterDrawer() {
+        if (filtersDrawer.classList.contains('active')) {
+            closeFilterDrawer();
+        } else {
+            openFilterDrawer();
+        }
+    }
+
     // Evento para abrir el drawer desde la navbar
     if (filterToggle) {
         filterToggle.addEventListener('click', function(e) {
@@ -174,11 +183,11 @@ function setupFilterDrawer() {
         });
     }
 
-    // Evento para abrir el drawer desde el botón móvil
+    // Evento para alternar el drawer desde el botón móvil
     if (mobileFilterButton) {
         mobileFilterButton.addEventListener('click', function(e) {
             e.preventDefault();
-            openFilterDrawer();
+            toggleFilterDrawer();
         });
     }
 
@@ -209,7 +218,7 @@ function setupFilterDrawer() {
     }
 }
 
-// Ya no necesitamos esta función porque ahora usamos valores hexadecimales directamente
+
 
 // Función para generar HTML de un producto mediante template literal
 function generarProductoTemplate(producto) {
@@ -351,10 +360,6 @@ function setupFiltros() {
             coloresContainer.appendChild(label);
         });
     }
-
-    // Ya no necesitamos aplicar filtros automáticamente en cada cambio
-    // ya que ahora tenemos un botón "Aplicar Filtros"
-
     // Botón para limpiar filtros
     const limpiarFiltrosBtn = document.getElementById('clear-filters');
     if (limpiarFiltrosBtn) {
@@ -614,7 +619,7 @@ function ordenarProductos(productos, criterio) {
             });
             break;
         default:
-            // No hacer nada
+            // No hacemo nada
             break;
     }
 
