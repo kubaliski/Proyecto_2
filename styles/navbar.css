@@ -11,7 +11,7 @@
     box-shadow: none;
 }
 
-/* Navbar con fondo al hacer scroll */
+/* Navbar con fondo al hacer scroll o en páginas que no son home */
 .navbar-scrolled {
     background-color: var(--color-white);
     box-shadow: var(--shadow-sm);
@@ -87,7 +87,7 @@
     font-weight: var(--font-weight-bold);
 }
 
-/* Estados diferentes según si la navbar es transparente o con fondo */
+/* Estados diferentes según si la navbar es transparente o con fondo - solo en home */
 .navbar:not(.navbar-scrolled) .navbar-brand a,
 .navbar:not(.navbar-scrolled) .navbar-icon {
     color: var(--color-white);
@@ -100,18 +100,13 @@
         gap: var(--spacing-lg);
     }
 
-    .navbar {
-        background-color: transparent;
-        box-shadow: none;
-    }
-
     /* Asegurar que el scrolling aplica fondo en móvil */
     .navbar.navbar-scrolled {
         background-color: var(--color-white);
         box-shadow: var(--shadow-sm);
     }
 
-    /* Mantener colores claros cuando no hay scroll */
+    /* Mantener colores claros cuando no hay scroll (solo en home) */
     .navbar:not(.navbar-scrolled) .navbar-brand a,
     .navbar:not(.navbar-scrolled) .navbar-icon {
         color: var(--color-white);

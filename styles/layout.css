@@ -130,6 +130,23 @@
     min-height: 70vh;
 }
 
+/* Espaciado específico para páginas interiores con navbar fija */
+.navbar-inner-page ~ .site-main {
+    padding-top: var(--spacing-xxl);
+}
+
+@media (max-width: var(--breakpoint-md)) {
+    .navbar-inner-page ~ .site-main {
+        padding-top: var(--spacing-xl);
+    }
+}
+
+@media (max-width: var(--breakpoint-sm)) {
+    .navbar-inner-page ~ .site-main {
+        padding-top: var(--spacing-lg);
+    }
+}
+
 /* Espaciado de secciones */
 .section {
     padding-top: var(--spacing-xl);
