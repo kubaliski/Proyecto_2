@@ -147,6 +147,9 @@ let currentSort = 'destacados';
 
 // Función para inicializar los productos y filtros
 function initProducts() {
+    //Exponemos los productos
+    window.productosDisponibles = productos;
+
     renderProductos(productos);
     setupFiltros();
     setupOrdenamiento();

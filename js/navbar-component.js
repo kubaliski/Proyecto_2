@@ -264,106 +264,192 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // FUNCIONALIDAD DE BÚSQUEDA
-   // FUNCIÓN DE INICIALIZACIÓN DEL MÓDULO DE BÚSQUEDA
-// Esta función debe reemplazar a la función initSearchModule original en navbar-component.js
+    function initSearchModule() {
+        console.log('Inicializando módulo de búsqueda');
 
-function initSearchModule() {
-    console.log('Inicializando módulo de búsqueda');
+        // Elementos del DOM
+        const searchIcon = document.querySelector('.search-icon');
+        const searchDropdown = document.getElementById('search-dropdown');
+        const searchClose = document.getElementById('search-close');
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+        const searchOverlay = document.getElementById('search-overlay');
 
-    // Elementos del DOM
-    const searchIcon = document.querySelector('.search-icon');
-    const searchDropdown = document.getElementById('search-dropdown');
-    const searchClose = document.getElementById('search-close');
-    const searchInput = document.getElementById('search-input');
-    const searchResults = document.getElementById('search-results');
-    const searchOverlay = document.getElementById('search-overlay');
-
-    if (!searchIcon || !searchDropdown || !searchOverlay) {
-        console.error('Elementos del buscador no encontrados');
-        return;
-    }
-
-    // Función para abrir/cerrar el buscador
-    function toggleSearch(e) {
-        if (e) {
-            e.preventDefault();
-            e.stopPropagation();
+        if (!searchIcon || !searchDropdown || !searchOverlay) {
+            console.error('Elementos del buscador no encontrados');
+            return;
         }
 
-        console.log('Toggle search dropdown');
-        searchDropdown.classList.toggle('active');
-        searchOverlay.classList.toggle('active');
-
-        if (searchDropdown.classList.contains('active')) {
-            document.body.classList.add('search-open');
-            setTimeout(() => {
-                searchInput.focus();
-            }, 100);
-        } else {
-            document.body.classList.remove('search-open');
-        }
-    }
-
-    // Función para cerrar el buscador
-    function closeSearch() {
-        searchDropdown.classList.remove('active');
-        searchOverlay.classList.remove('active');
-        document.body.classList.remove('search-open');
-    }
-
-    // Función para aplicar filtros de búsqueda
-    function aplicarFiltrosBusqueda(query) {
-        window.ultimaConsultaBusqueda = query;
-        if (typeof window.aplicarFiltros === 'function') {
-            window.aplicarFiltros();
-        }
-    }
-
-    // Agregar eventos
-    searchIcon.addEventListener('click', toggleSearch);
-    searchClose.addEventListener('click', closeSearch);
-    searchOverlay.addEventListener('click', closeSearch);
-
-    // Evitar que los clics dentro del dropdown propaguen al documento
-    searchDropdown.addEventListener('click', function(e) {
-        e.stopPropagation();
-    });
-
-    // Evento de input para búsqueda en tiempo real
-    searchInput.addEventListener('input', function() {
-        performSearch(this.value);
-    });
-
-    // Evento de envío del formulario para evitar recarga
-    const searchForm = searchDropdown.querySelector('.search-form');
-    if (searchForm) {
-        searchForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const query = searchInput.value;
-            if (query.trim() !== '') {
-                aplicarFiltrosBusqueda(query);
+        // Función para abrir/cerrar el buscador
+        function toggleSearch(e) {
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
             }
-        });
-    }
 
-    // Exponer API para usar desde otros scripts
-    window.searchAPI = {
-        open: function() {
-            searchDropdown.classList.add('active');
-            searchOverlay.classList.add('active');
-            document.body.classList.add('search-open');
-            if (searchInput) {
+            console.log('Toggle search dropdown');
+            searchDropdown.classList.toggle('active');
+            searchOverlay.classList.toggle('active');
+
+            if (searchDropdown.classList.contains('active')) {
+                document.body.classList.add('search-open');
                 setTimeout(() => {
                     searchInput.focus();
                 }, 100);
+            } else {
+                document.body.classList.remove('search-open');
             }
-        },
-        close: closeSearch,
-        search: performSearch,
-        aplicarFiltrosBusqueda: aplicarFiltrosBusqueda
-    };
-}
+        }
+
+        // Función para cerrar el buscador
+        function closeSearch() {
+            searchDropdown.classList.remove('active');
+            searchOverlay.classList.remove('active');
+            document.body.classList.remove('search-open');
+        }
+
+        // Función para realizar la búsqueda - IMPLEMENTACIÓN FALTANTE
+        function performSearch(query) {
+            // Validar la consulta
+            if (!query || query.trim() === '') {
+                // Si la consulta está vacía, mostrar mensaje predeterminado
+                searchResults.innerHTML = '<div class="empty-search">Busca productos por nombre, categoría o marca</div>';
+                return;
+            }
+
+            console.log('Realizando búsqueda: ', query);
+
+            // Simulación de búsqueda mientras se implementa la función real
+            // En una implementación real, aquí se llamaría a la API o se filtrarían productos en memoria
+
+            // Mostrar indicador de carga
+            searchResults.innerHTML = '<div class="empty-search">Buscando...</div>';
+
+            // Simulación de demora de red
+            setTimeout(() => {
+                // Esta es una búsqueda simulada
+                // Puedes reemplazar esto con una función real que consulte tu base de datos
+                const resultados = window.productosDisponibles ?
+                    window.productosDisponibles.filter(p =>
+                        p.nombre.toLowerCase().includes(query.toLowerCase()) ||
+                        p.categoria.toLowerCase().includes(query.toLowerCase()) ||
+                        p.marca.toLowerCase().includes(query.toLowerCase())
+                    ) : [];
+
+                if (resultados.length === 0) {
+                    searchResults.innerHTML = '<div class="no-results">No se encontraron resultados para "' + query + '"</div>';
+                    return;
+                }
+
+                // Mostrar resultados (limitado a 5 para el dropdown)
+                const maxResults = Math.min(5, resultados.length);
+                let resultsHTML = '<div class="search-results-container">';
+
+                for (let i = 0; i < maxResults; i++) {
+                    const producto = resultados[i];
+                    resultsHTML += `
+                        <div class="search-result-item" data-id="${producto.id}">
+                            <div class="search-result-image">
+                                <img src="${producto.imagen}" alt="${producto.nombre}">
+                            </div>
+                            <div class="search-result-info">
+                                <h4 class="search-result-title">${producto.nombre}</h4>
+                                <div class="search-result-category">${producto.marca} | ${producto.categoria}</div>
+                                <div class="search-result-price">
+                                    <span class="search-result-price-final">${producto.precio.toFixed(2)} €</span>
+                                    ${producto.precioOriginal ? `<span class="search-result-price-original">${producto.precioOriginal.toFixed(2)} €</span>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Si hay más resultados, mostrar enlace para ver todos
+                if (resultados.length > maxResults) {
+                    resultsHTML += `
+                        <div class="view-all-results">
+                            Ver todos los resultados (${resultados.length})
+                        </div>
+                    `;
+                }
+
+                resultsHTML += '</div>';
+                searchResults.innerHTML = resultsHTML;
+
+                // Configurar eventos para los resultados
+                document.querySelectorAll('.search-result-item').forEach(item => {
+                    item.addEventListener('click', function() {
+                        const id = this.dataset.id;
+                        window.location.href = `producto.html?id=${id}`;
+                    });
+                });
+
+                // Configurar evento para "Ver todos los resultados"
+                const viewAllResults = document.querySelector('.view-all-results');
+                if (viewAllResults) {
+                    viewAllResults.addEventListener('click', function() {
+                        // Aplicar los filtros de búsqueda y cerrar el dropdown
+                        if (typeof window.aplicarFiltrosBusqueda === 'function') {
+                            window.aplicarFiltrosBusqueda(query);
+                        }
+                        closeSearch();
+                    });
+                }
+            }, 300); // Simula un pequeño retraso de red
+        }
+
+        // Función para aplicar filtros de búsqueda
+        function aplicarFiltrosBusqueda(query) {
+            window.ultimaConsultaBusqueda = query;
+            if (typeof window.aplicarFiltros === 'function') {
+                window.aplicarFiltros();
+            }
+        }
+
+        // Agregar eventos
+        searchIcon.addEventListener('click', toggleSearch);
+        searchClose.addEventListener('click', closeSearch);
+        searchOverlay.addEventListener('click', closeSearch);
+
+        // Evitar que los clics dentro del dropdown propaguen al documento
+        searchDropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Evento de input para búsqueda en tiempo real
+        searchInput.addEventListener('input', function() {
+            performSearch(this.value);
+        });
+
+        // Evento de envío del formulario para evitar recarga
+        const searchForm = searchDropdown.querySelector('.search-form');
+        if (searchForm) {
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const query = searchInput.value;
+                if (query.trim() !== '') {
+                    aplicarFiltrosBusqueda(query);
+                }
+            });
+        }
+
+        // Exponer API para usar desde otros scripts
+        window.searchAPI = {
+            open: function() {
+                searchDropdown.classList.add('active');
+                searchOverlay.classList.add('active');
+                document.body.classList.add('search-open');
+                if (searchInput) {
+                    setTimeout(() => {
+                        searchInput.focus();
+                    }, 100);
+                }
+            },
+            close: closeSearch,
+            search: performSearch,
+            aplicarFiltrosBusqueda: aplicarFiltrosBusqueda
+        };
+    }
 
     // FUNCIONALIDAD DEL USUARIO
     function initUserModule() {
