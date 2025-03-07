@@ -465,11 +465,17 @@
     border-radius: var(--border-radius-md);
     box-shadow: var(--shadow-md);
     z-index: 1100;
-    transition: bottom var(--transition-normal);
+    transition: bottom 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 0;
+    max-width: 90%;
+    text-align: center;
+    word-break: break-word;
+    line-height: 1.4;
 }
 
 .notification-show {
     bottom: var(--spacing-lg);
+    opacity: 1;
 }
 
 /* Media queries para responsive */
@@ -484,6 +490,11 @@
 @media (max-width: 576px) {
     .products-title-inline {
         font-size: 2.5rem;
+    }
+    .notification {
+        max-width: 85%;
+        padding: var(--spacing-sm);
+        font-size: 0.9rem;
     }
 }
 
