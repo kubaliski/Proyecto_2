@@ -18,6 +18,10 @@ document.addEventListener('DOMContentLoaded', function() {
                        window.location.pathname === '/index.html' ||
                        window.location.href.includes('index.html');
 
+    // Determinar si estamos en la página de carrito
+    const isCartPage = window.location.pathname === '/carrito.html' ||
+                      window.location.href.includes('carrito.html');
+
     // Estado del carrito (lo manejaremos directamente aquí)
     let cart = {
         items: [], // Array de objetos con id, name, price, quantity, image
@@ -98,6 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             </div>
                         </div>
                     </a>
+                    ${!isCartPage ? `
                     <a href="#" class="navbar-icon cart-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
@@ -122,12 +127,13 @@ document.addEventListener('DOMContentLoaded', function() {
                                     <span class="cart-total-amount" id="cart-total">0.00 €</span>
                                 </div>
                                 <div class="cart-buttons">
-                                    <a href="#" class="btn btn-outline">Ver carrito</a>
+                                    <a href="carrito.html" class="btn btn-outline">Ver carrito</a>
                                     <a href="#" class="btn btn-primary">Comprar</a>
                                 </div>
                             </div>
                         </div>
                     </a>
+                    ` : ''}
                 </div>
             </div>
 
@@ -525,6 +531,27 @@ document.addEventListener('DOMContentLoaded', function() {
     function initCartModule() {
         console.log('Inicializando módulo de carrito');
 
+        // Si estamos en la página de carrito, solo actualizamos el contador pero no inicializamos el dropdown
+        if (isCartPage) {
+            // Cargar carrito desde localStorage
+            try {
+                const savedCart = localStorage.getItem('cart');
+                if (savedCart) {
+                    cart = JSON.parse(savedCart);
+                }
+            } catch (e) {
+                console.error('Error al cargar el carrito: ', e);
+            }
+
+            // Actualizar contador (aunque no sea visible en la página de carrito)
+            // Esto es útil si hay otras partes de la app que necesitan esta información
+            updateCartCount();
+
+            // Dispara un evento para informar que la navbar está lista
+            document.dispatchEvent(new CustomEvent('navbarReady'));
+            return;
+        }
+
         // Cargar carrito desde localStorage
         try {
             const savedCart = localStorage.getItem('cart');
@@ -738,6 +765,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Función para actualizar el contador del carrito
         function updateCartCount() {
             const totalItems = cart.items.reduce((sum, item) => sum + item.quantity, 0);
+            const cartCount = document.querySelector('.cart-count');
+
             if (cartCount) {
                 cartCount.textContent = totalItems;
 
@@ -845,40 +874,61 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // Evento de clic en icono de carrito
-        cartIcon.addEventListener('click', toggleCart);
+        // Solo configurar eventos si NO estamos en la página de carrito
+        if (!isCartPage) {
+            // Evento de clic en icono de carrito
+            cartIcon.addEventListener('click', toggleCart);
 
-        // Evento de clic en cerrar carrito
-        cartClose.addEventListener('click', closeCart);
+            // Evento de clic en cerrar carrito
+            cartClose.addEventListener('click', closeCart);
 
-        // Evento de clic en overlay (fondo oscuro)
-        cartOverlay.addEventListener('click', closeCart);
+            // Evento de clic en overlay (fondo oscuro)
+            cartOverlay.addEventListener('click', closeCart);
 
-        // Evitar que los clics dentro del dropdown se propaguen
-        cartDropdown.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
+            // Evitar que los clics dentro del dropdown se propaguen
+            cartDropdown.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        }
 
         // Inicializar carrito
         recalculateTotal();
         updateCartCount();
         setupAddToCartButtons();
 
-        // Exponer API para usar desde fuera
+        // Exponer API para usar desde fuera - disponible incluso en la página de carrito
         window.cartAPI = {
             addToCart,
             updateItemQuantity,
             removeFromCart,
             getCart: () => cart,
             openCart: function() {
-                cartDropdown.classList.add('active');
-                cartOverlay.classList.add('active');
-                document.body.classList.add('cart-open');
-                renderCart();
+                // Solo funciona si no estamos en la página de carrito
+                if (!isCartPage && cartDropdown) {
+                    cartDropdown.classList.add('active');
+                    cartOverlay.classList.add('active');
+                    document.body.classList.add('cart-open');
+                    renderCart();
+                }
             },
-            closeCart: closeCart,
-            toggleCart: toggleCart
+            closeCart: function() {
+                // Solo funciona si no estamos en la página de carrito
+                if (!isCartPage && cartDropdown) {
+                    cartDropdown.classList.remove('active');
+                    cartOverlay.classList.remove('active');
+                    document.body.classList.remove('cart-open');
+                }
+            },
+            toggleCart: function(e) {
+                // Solo funciona si no estamos en la página de carrito
+                if (!isCartPage && cartDropdown) {
+                    toggleCart(e);
+                }
+            }
         };
+
+        // Disparar evento de que la navbar está lista
+        document.dispatchEvent(new CustomEvent('navbarReady'));
     }
 
     // Inicializar los elementos de la navbar
