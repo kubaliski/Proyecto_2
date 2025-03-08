@@ -831,47 +831,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     addToCart(product);
                 });
             });
-
-            // Evento especial para el botón de "Añadir al carrito" de la página de detalle de producto
-            const addToCartDetailBtn = document.getElementById('add-to-cart');
-            if (addToCartDetailBtn) {
-                addToCartDetailBtn.addEventListener('click', function() {
-                    // Obtener datos del producto desde la página de detalle
-                    const productTitle = document.getElementById('product-title');
-                    const productId = document.getElementById('product-id');
-                    const productPrice = document.getElementById('product-price');
-                    const productImage = document.getElementById('product-main-image');
-                    const productQuantity = document.getElementById('product-quantity');
-
-                    if (productTitle && productId && productPrice && productImage) {
-                        // Extraer precio numérico (eliminar el símbolo € y convertir a número)
-                        let priceText = productPrice.textContent;
-                        let price = parseFloat(priceText.replace('€', '').trim());
-
-                        // Si no se puede extraer el precio, usar un valor predeterminado
-                        if (isNaN(price)) {
-                            price = 99.99;
-                        }
-
-                        // Obtener cantidad del input
-                        let quantity = 1;
-                        if (productQuantity) {
-                            quantity = parseInt(productQuantity.value) || 1;
-                        }
-
-                        const product = {
-                            id: productId.textContent,
-                            name: productTitle.textContent,
-                            price: price,
-                            quantity: quantity,
-                            image: productImage.src
-                        };
-
-                        // Añadir al carrito
-                        addToCart(product);
-                    }
-                });
-            }
         }
 
         // Solo configurar eventos si NO estamos en la página de carrito

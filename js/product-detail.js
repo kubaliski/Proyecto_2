@@ -325,6 +325,10 @@ function setupProductEvents() {
 /**
  * Añade el producto actual al carrito
  */
+
+/**
+ * Añade el producto actual al carrito
+ */
 function addProductToCart() {
     const addToCartBtn = document.getElementById('add-to-cart');
     const quantityInput = document.getElementById('product-quantity');
@@ -366,13 +370,12 @@ function addProductToCart() {
             id: producto.id.toString(),
             name: producto.nombre,
             price: precioFinal,
-            image: producto.imagen || 'assets/products/shoe-placeholder.png'
+            image: producto.imagen || 'assets/products/shoe-placeholder.png',
+            quantity: quantity  // Pasar la cantidad como un parámetro
         };
 
-        // Añadir la cantidad de productos seleccionada
-        for (let i = 0; i < quantity; i++) {
-            window.cartAPI.addToCart(productToAdd);
-        }
+        // Añadir al carrito una sola vez con la cantidad especificada
+        window.cartAPI.addToCart(productToAdd);
 
         // Mostrar notificación de éxito
         mostrarNotificacion(`${quantity}x ${producto.nombre} añadido al carrito`);
