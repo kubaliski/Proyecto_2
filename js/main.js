@@ -1,24 +1,22 @@
 /**
- * Archivo principal de JavaScript
- * Gestiona la inicialización de todos los módulos
+ * Archivo principal de JavaScript para ECO Step
+ *
+ * Este script gestiona la inicialización general de la web
+ * y la reproducción del video de fondo en la página principal.
+ *
+ * Autor: Angel Caparros Caballero
+ * Última modificación: Marzo 2025
  */
 
-// Esperar a que el DOM esté completamente cargado
+// Inicialización cuando el DOM está cargado
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM cargado completamente, scripts inicializados');
-
-    // Gestión del video
+    // Gestión del video de fondo
     initVideoBackground();
 
-    // Aquí podrías ejecutar otras funciones de inicialización global
+    // Espacio para futuras inicializaciones globales
 });
 
-/**
- * Manejo avanzado del video de fondo
- * - Comprueba si el video puede reproducirse
- * - Implementa fallbacks para diferentes navegadores
- * - Gestiona errores de carga
- */
+// Gestiona la reproducción del video de fondo con sistema de fallback
 function initVideoBackground() {
     const heroVideo = document.getElementById('hero-video');
     const videoContainer = document.querySelector('.video-container');
@@ -26,23 +24,21 @@ function initVideoBackground() {
 
     if (!heroVideo) return;
 
-    // Función para manejar el éxito de la carga del video
+    // Maneja el éxito de la carga del video
     function handleVideoSuccess() {
-        console.log('Video loaded successfully');
         // Añadir clase para indicar que el video está reproduciéndose
         heroSection.classList.add('video-playing');
     }
 
-    // Función para manejar errores de carga o reproducción
+    // Maneja errores de carga o reproducción del video
     function handleVideoError(error) {
-        console.error('Video error:', error);
         // Añadir clase para aplicar el fondo de respaldo
         heroSection.classList.add('video-error');
-        // Ocultar el contenedor de video para que se muestre el fondo de respaldo
+        // Ocultar el contenedor de video para mostrar el fondo de respaldo
         videoContainer.style.display = 'none';
     }
 
-    // Comprobar si el video puede reproducirse
+    // Comprueba si el video puede reproducirse
     function checkVideoPlayback() {
         const videoPromise = heroVideo.play();
 
@@ -54,7 +50,6 @@ function initVideoBackground() {
                 })
                 .catch(error => {
                     // Error al reproducir el video (ej: autoplay bloqueado)
-                    console.log('Autoplay prevented:', error);
 
                     // En móviles, el autoplay suele estar bloqueado, añadir botón para reproducir
                     const heroContent = document.querySelector('.hero-content');
@@ -88,7 +83,7 @@ function initVideoBackground() {
         }
     }
 
-    // Eventos para el video
+    // Configurar eventos para el video
     heroVideo.addEventListener('canplaythrough', function() {
         // El video se ha cargado y puede reproducirse
         checkVideoPlayback();
@@ -100,7 +95,7 @@ function initVideoBackground() {
     });
 
     // Si el video ya está cargado cuando se añade el listener
-    if (heroVideo.readyState >= 3) { // HAVE_FUTURE_DATA or higher
+    if (heroVideo.readyState >= 3) { // HAVE_FUTURE_DATA o superior
         checkVideoPlayback();
     }
 }

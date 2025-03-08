@@ -1,4 +1,11 @@
-// Carrusel para la sección "Back to the City"
+/**
+ * Gestión del carrusel en la sección "Back to the City"
+ *
+ * Este scrpit implementa la funcionalidad de carrusel para la sección
+ * destacada de la página principal, con soporte para navegación y gestos táctiles.
+ *
+ */
+
 document.addEventListener('DOMContentLoaded', function() {
     // Elementos del carrusel
     const carousel = document.getElementById('city-carousel');
@@ -14,18 +21,18 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentIndex = 0;
     const itemCount = items.length;
 
-    // Función para actualizar el carrusel
+    // Actualiza la posición y estado del carrusel
     function updateCarousel() {
-        // Mover el carrusel
+        // Mover el carrusel horizontalmente
         carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
 
-        // Actualizar dots
+        // Actualizar indicadores (dots)
         dots.forEach((dot, index) => {
             dot.classList.toggle('active', index === currentIndex);
         });
     }
 
-    // Event listeners para los botones de navegación
+    // Configurar eventos para los botones de navegación
     if (prevButton) {
         prevButton.addEventListener('click', function() {
             currentIndex = (currentIndex - 1 + itemCount) % itemCount;
@@ -40,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Event listeners para los dots
+    // Configurar eventos para los indicadores (dots)
     dots.forEach((dot, index) => {
         dot.addEventListener('click', function() {
             currentIndex = index;
@@ -48,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Swipe para móvil (implementación simple)
+    // Implementación de gestos táctiles para móvil
     let touchStartX = 0;
     let touchEndX = 0;
 
@@ -61,23 +68,17 @@ document.addEventListener('DOMContentLoaded', function() {
         handleSwipe();
     });
 
+    // Procesa el gesto de deslizamiento
     function handleSwipe() {
         if (touchEndX < touchStartX - 50) {
-            // Swipe izquierda - siguiente
+            // Deslizamiento hacia la izquierda - avanzar
             currentIndex = (currentIndex + 1) % itemCount;
             updateCarousel();
         } else if (touchEndX > touchStartX + 50) {
-            // Swipe derecha - anterior
+            // Deslizamiento hacia la derecha - retroceder
             currentIndex = (currentIndex - 1 + itemCount) % itemCount;
             updateCarousel();
         }
     }
 
-    // Auto-play opcional (uncomment para activar)
-    /*
-    setInterval(function() {
-        currentIndex = (currentIndex + 1) % itemCount;
-        updateCarousel();
-    }, 5000); // Cambia cada 5 segundos
-    */
 });

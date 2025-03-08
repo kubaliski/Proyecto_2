@@ -1,8 +1,10 @@
 /**
- * Script optimizado para la página de carrito
- * - Integra los estilos de cantidad consistentes con cart-dropdown
- * - Soluciona los problemas de conflicto de estilos
- * - Mejora la experiencia de usuario
+ * Página del carrito
+ *
+ * Este script gestiona la funcionalidad del carrito de compra,
+ * incluyendo la visualización, edición y eliminación de productos,
+ * así como el cálculo de totales y la interacción con localStorage.
+ *
  */
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -26,7 +28,7 @@ function initCartPage() {
     setupCartEvents();
 }
 
-// Función para cargar el carrito desde localStorage
+// Carga el carrito desde localStorage
 function loadCartFromStorage() {
     const savedCart = localStorage.getItem('cart');
 
@@ -45,7 +47,7 @@ function loadCartFromStorage() {
     }
 }
 
-// Función para guardar el carrito en localStorage
+// Guarda el carrito en localStorage
 function saveCartToStorage(cart) {
     // Asegurar que el total es un número
     if (cart && typeof cart.total !== 'number') {
@@ -54,7 +56,7 @@ function saveCartToStorage(cart) {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-// Función para renderizar el carrito completo
+// Renderiza el carrito completo
 function renderCart(cartData) {
     const cartItemsContainer = document.getElementById('cart-items-container');
     const emptyCartMessage = document.getElementById('empty-cart-message');
@@ -84,7 +86,7 @@ function renderCart(cartData) {
     renderCartItems(cartData.items, cartItemsContainer);
 }
 
-// Función para actualizar los totales en la interfaz
+// Actualiza los totales en la interfaz
 function updateTotals(formattedTotal, totalValue) {
     // Actualizar subtotal
     const subtotalElement = document.getElementById('cart-subtotal');
@@ -111,7 +113,7 @@ function updateTotals(formattedTotal, totalValue) {
     }
 }
 
-// Función para mostrar/ocultar elementos según si el carrito está vacío
+// Muestra/oculta elementos según si el carrito está vacío
 function toggleEmptyCartUI(isEmpty, emptyCartMessage, cartActions, checkoutBtn) {
     // Mostrar/ocultar mensaje de carrito vacío
     if (emptyCartMessage) {
@@ -136,7 +138,7 @@ function toggleEmptyCartUI(isEmpty, emptyCartMessage, cartActions, checkoutBtn) 
     }
 }
 
-// Función para renderizar los items del carrito
+// Renderiza los ítems del carrito
 function renderCartItems(items, container) {
     if (!container) return;
 
@@ -156,7 +158,7 @@ function renderCartItems(items, container) {
     container.appendChild(fragment);
 }
 
-// Función para crear un elemento de item del carrito
+// Crea un elemento DOM para un ítem del carrito
 function createCartItemElement(item) {
     const cartItem = document.createElement('div');
     cartItem.className = 'cart-item';
@@ -167,7 +169,7 @@ function createCartItemElement(item) {
     const quantity = parseInt(item.quantity) || 0;
     const itemTotal = price * quantity;
 
-    // Crear el HTML del item - no se usa el selector de cantidad estandar, sino una estructura directa
+    // Crear el HTML del item
     cartItem.innerHTML = `
         <div class="cart-item-product">
             <div class="cart-item-image">
@@ -206,13 +208,13 @@ function createCartItemElement(item) {
     return cartItem;
 }
 
-// Función para formatear precios
+// Formatea precios con 2 decimales y símbolo €
 function formatPrice(price) {
     const numPrice = parseFloat(price);
     return Number.isNaN(numPrice) ? "0.00 €" : `${numPrice.toFixed(2)} €`;
 }
 
-// Función para configurar los eventos del carrito
+// Configura los eventos del carrito
 function setupCartEvents() {
     // Agregar estilos para los controles de cantidad
     addQuantityStyles();
@@ -258,7 +260,7 @@ function setupCartEvents() {
     }
 }
 
-// Función para agregar estilos específicos para los controles de cantidad
+// Agrega estilos específicos para los controles de cantidad
 function addQuantityStyles() {
     const style = document.createElement('style');
     style.id = 'cart-page-specific-styles';
@@ -328,7 +330,7 @@ function addQuantityStyles() {
     document.head.appendChild(style);
 }
 
-// Función para actualizar la cantidad de un item
+// Actualiza la cantidad de un item
 function updateItemQuantity(itemId, change) {
     // Cargar carrito actual
     const cart = loadCartFromStorage();
@@ -359,9 +361,9 @@ function updateItemQuantity(itemId, change) {
     }
 }
 
-// Función para actualizar la UI de un ítem específico
+// Actualiza la UI de un ítem específico
 function updateItemUI(itemId, newQuantity, cart) {
-    // 1. Actualizar el indicador de cantidad
+    // Actualizar el indicador de cantidad
     const quantityElement = document.querySelector(`.cart-item[data-id="${itemId}"] .cart-item-quantity-number`);
     if (quantityElement) {
         quantityElement.textContent = newQuantity;
@@ -371,7 +373,7 @@ function updateItemUI(itemId, newQuantity, cart) {
         }, 500);
     }
 
-    // 2. Actualizar el total del ítem
+    // Actualizar el total del ítem
     const itemTotalElement = document.querySelector(`.cart-item[data-id="${itemId}"] .cart-item-total`);
     if (itemTotalElement) {
         const item = cart.items.find(item => item.id === itemId);
@@ -381,16 +383,16 @@ function updateItemUI(itemId, newQuantity, cart) {
         }
     }
 
-    // 3. Actualizar los totales generales
+    // Actualizar los totales generales
     const totalValue = parseFloat(cart.total) || 0;
     const formattedTotal = formatPrice(totalValue);
     updateTotals(formattedTotal, totalValue);
 
-    // 4. Actualizar contador en la navbar
+    // Actualizar contador en la navbar
     updateNavbarCartCount();
 }
 
-// Función para eliminar un item del carrito
+// Elimina un item del carrito
 function removeCartItem(itemId) {
     // Cargar carrito actual
     const cart = loadCartFromStorage();
@@ -405,7 +407,7 @@ function removeCartItem(itemId) {
     // Comprobar si el carrito quedó vacío
     const isEmpty = cart.items.length === 0;
 
-    // Renderizar carrito actualizado (esto reconstruye todo el carrito)
+    // Renderizar carrito actualizado
     renderCart(cart);
 
     // Si quedó vacío, mostrar mensaje explícitamente
@@ -423,7 +425,7 @@ function removeCartItem(itemId) {
     mostrarNotificacion('Producto eliminado del carrito');
 }
 
-// Función para recalcular el total del carrito
+// Recalcula el total del carrito
 function recalculateCartTotal(cart) {
     // Asegurar que items es un array
     if (!Array.isArray(cart.items)) {
@@ -440,7 +442,7 @@ function recalculateCartTotal(cart) {
     return cart;
 }
 
-// Función para vaciar completamente el carrito
+// Vacía completamente el carrito
 function clearCart() {
     if (confirm('¿Estás seguro de que quieres vaciar el carrito?')) {
         // Crear carrito vacío
@@ -470,13 +472,13 @@ function clearCart() {
     }
 }
 
-// Función para proceder al checkout (simulación)
+// Procede al checkout (simulación)
 function proceedToCheckout() {
     alert('Esta funcionalidad estaría conectada con una pasarela de pago real. Por ahora, gracias por tu compra simulada.');
     // Aquí se podría redirigir: window.location.href = 'checkout.html';
 }
 
-// Función para mostrar notificación
+// Muestra una notificación al usuario
 function mostrarNotificacion(mensaje) {
     // Eliminar notificación existente si hay
     const notificacionExistente = document.querySelector('.notification');
@@ -509,7 +511,7 @@ function mostrarNotificacion(mensaje) {
     }, 3000);
 }
 
-// Actualizar contador del carrito en la navbar
+// Actualiza el contador del carrito en la navbar
 function updateNavbarCartCount() {
     const cartData = loadCartFromStorage();
 
@@ -526,7 +528,7 @@ function updateNavbarCartCount() {
     }
 }
 
-// Actualizar el contador de la navbar cuando esté lista
+// Actualizar el contador cuando la navbar esté lista
 document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('navbarReady', updateNavbarCartCount);
 });

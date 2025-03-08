@@ -1,11 +1,13 @@
 /**
- * Componente de Navbar para ECO Step
- * Este script genera dinámicamente la navbar en cada página y gestiona todos los eventos
+ * Componente Navbar
+ *
+ * Este script genera la barra de navegación para todas las páginas del sitio
+ * y gestiona sus elementos interactivos (carrito, buscador, cuenta de usuario).
+ *
  */
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Navbar component generator loaded');
 
-    // Elemento donde se insertará la navbar (debe existir en todas las páginas)
+document.addEventListener('DOMContentLoaded', function() {
+    // Elemento donde se insertará la navbar
     const navbarContainer = document.getElementById('navbar');
 
     if (!navbarContainer) {
@@ -13,22 +15,21 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    // Determinar si estamos en la página principal o en una página de producto
+    // Detectar en qué página estamos para ajustar el comportamiento
     const isHomePage = window.location.pathname === '/' ||
                        window.location.pathname === '/index.html' ||
                        window.location.href.includes('index.html');
 
-    // Determinar si estamos en la página de carrito
     const isCartPage = window.location.pathname === '/carrito.html' ||
                       window.location.href.includes('carrito.html');
 
-    // Estado del carrito (lo manejaremos directamente aquí)
+    // Estado del carrito
     let cart = {
-        items: [], // Array de objetos con id, name, price, quantity, image
+        items: [], // Array de objetos con id, name, price, quantity, image etc
         total: 0
     };
 
-    // HTML para la navbar (estructura completa)
+    // HTML para la navbar
     const navbarHTML = `
         <div class="container">
             <!-- Lado izquierdo: marca -->
@@ -137,16 +138,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
 
-            <!-- Overlay de fondo oscuro -->
+            <!-- Overlays para fondos oscuros de dropdowns -->
             <div class="menu-overlay" id="menu-overlay"></div>
-
-            <!-- Overlay para el filtro de productos -->
             <div class="search-overlay" id="search-overlay"></div>
-
-            <!-- Overlay para el user dropdown -->
             <div class="user-overlay" id="user-overlay"></div>
-
-            <!-- Overlay para el carrito -->
             <div class="cart-overlay" id="cart-overlay"></div>
 
             ${isHomePage ? `
@@ -214,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Insertar el HTML de la navbar
     navbarContainer.innerHTML = navbarHTML;
 
-    // Función para manejar el cambio de apariencia al hacer scroll
+    // Cambia apariencia de la navbar al hacer scroll
     function handleScroll() {
         if (!isHomePage || window.scrollY > 50) {
             navbarContainer.classList.add('navbar-scrolled');
@@ -222,13 +217,13 @@ document.addEventListener('DOMContentLoaded', function() {
             navbarContainer.classList.remove('navbar-scrolled');
         }
 
-        // La clase navbar-inner-page siempre se mantiene en páginas interiores
+        // Mantener clase para páginas interiores
         if (!isHomePage) {
             navbarContainer.classList.add('navbar-inner-page');
         }
     }
 
-    // Función para el scroll hacia abajo al hacer clic en el indicador (solo en la página principal)
+    // Configurar scroll hacia abajo en la página principal
     function setupScrollIndicator() {
         if (isHomePage) {
             const scrollIndicator = document.querySelector('.scroll-indicator');
@@ -244,16 +239,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Configurar video de hero (solo en la página principal)
+    // Intenta reproducir el video de fondo en la página principal
     function setupVideo() {
         if (isHomePage) {
             const heroVideo = document.getElementById('hero-video');
             if (heroVideo) {
-                // Reintentar reproducción del video (solución para algunos navegadores móviles)
                 heroVideo.play().catch(function(error) {
-                    console.log('Auto-play prevented:', error);
+                    console.log('Auto-play impedido:', error);
 
-                    // Añadir un botón para reproducir en móviles si es necesario
+                    // Añadir botón para reproducir en móviles si es necesario
                     const heroContent = document.querySelector('.hero-content');
                     if (heroContent && !document.querySelector('.video-play-btn')) {
                         const playButton = document.createElement('button');
@@ -270,10 +264,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Inicialización del módulo de búsqueda
     function initSearchModule() {
-        console.log('Inicializando módulo de búsqueda');
-
-        // Elementos del DOM
+        // Elementos del DOM para la búsqueda
         const searchIcon = document.querySelector('.search-icon');
         const searchDropdown = document.getElementById('search-dropdown');
         const searchClose = document.getElementById('search-close');
@@ -286,14 +279,13 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Función para abrir/cerrar el buscador
+        // Abrir/cerrar el buscador
         function toggleSearch(e) {
             if (e) {
                 e.preventDefault();
                 e.stopPropagation();
             }
 
-            console.log('Toggle search dropdown');
             searchDropdown.classList.toggle('active');
             searchOverlay.classList.toggle('active');
 
@@ -307,34 +299,27 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // Función para cerrar el buscador
+        // Cerrar el buscador
         function closeSearch() {
             searchDropdown.classList.remove('active');
             searchOverlay.classList.remove('active');
             document.body.classList.remove('search-open');
         }
 
-        // Función para realizar la búsqueda - IMPLEMENTACIÓN FALTANTE
+        // Realizar búsqueda de productos
         function performSearch(query) {
-            // Validar la consulta
+            // Si la consulta está vacía, mostrar mensaje predeterminado
             if (!query || query.trim() === '') {
-                // Si la consulta está vacía, mostrar mensaje predeterminado
                 searchResults.innerHTML = '<div class="empty-search">Busca productos por nombre, categoría o marca</div>';
                 return;
             }
-
-            console.log('Realizando búsqueda: ', query);
-
-            // Simulación de búsqueda mientras se implementa la función real
-            // En una implementación real, aquí se llamaría a la API o se filtrarían productos en memoria
 
             // Mostrar indicador de carga
             searchResults.innerHTML = '<div class="empty-search">Buscando...</div>';
 
             // Simulación de demora de red
             setTimeout(() => {
-                // Esta es una búsqueda simulada
-                // Puedes reemplazar esto con una función real que consulte tu base de datos
+                // Buscar en los productos disponibles
                 const resultados = window.productosDisponibles ?
                     window.productosDisponibles.filter(p =>
                         p.nombre.toLowerCase().includes(query.toLowerCase()) ||
@@ -404,7 +389,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 300); // Simula un pequeño retraso de red
         }
 
-        // Función para aplicar filtros de búsqueda
+        // Aplicar filtros desde la búsqueda
         function aplicarFiltrosBusqueda(query) {
             window.ultimaConsultaBusqueda = query;
             if (typeof window.aplicarFiltros === 'function') {
@@ -412,7 +397,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // Agregar eventos
+        // Agregar eventos para la búsqueda
         searchIcon.addEventListener('click', toggleSearch);
         searchClose.addEventListener('click', closeSearch);
         searchOverlay.addEventListener('click', closeSearch);
@@ -422,12 +407,12 @@ document.addEventListener('DOMContentLoaded', function() {
             e.stopPropagation();
         });
 
-        // Evento de input para búsqueda en tiempo real
+        // Búsqueda en tiempo real
         searchInput.addEventListener('input', function() {
             performSearch(this.value);
         });
 
-        // Evento de envío del formulario para evitar recarga
+        // Evitar recarga al enviar el formulario
         const searchForm = searchDropdown.querySelector('.search-form');
         if (searchForm) {
             searchForm.addEventListener('submit', function(e) {
@@ -457,30 +442,26 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
 
-    // FUNCIONALIDAD DEL USUARIO
+    // Inicialización del módulo de usuario
     function initUserModule() {
-        console.log('Inicializando módulo de usuario');
-
-        // Elementos del DOM
+        // Elementos del DOM para el usuario
         const userIcon = document.querySelector('.user-icon');
         const userDropdown = document.getElementById('user-dropdown');
         const userOverlay = document.getElementById('user-overlay');
         const userClose = document.getElementById('user-close');
 
-        // Verificar que los elementos existan
         if (!userIcon || !userDropdown || !userOverlay || !userClose) {
             console.error('Elementos del dropdown de usuario no encontrados');
             return;
         }
 
-        // Función para abrir/cerrar el dropdown
+        // Abrir/cerrar el dropdown de usuario
         function toggleUserDropdown(e) {
             if (e) {
                 e.preventDefault();
                 e.stopPropagation();
             }
 
-            console.log('Toggle user dropdown');
             userDropdown.classList.toggle('active');
             userOverlay.classList.toggle('active');
 
@@ -492,20 +473,16 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // Función para cerrar el dropdown
+        // Cerrar el dropdown de usuario
         function closeUserDropdown() {
             userDropdown.classList.remove('active');
             userOverlay.classList.remove('active');
             document.body.classList.remove('user-open');
         }
 
-        // Evento de clic en icono de usuario
+        // Eventos para abrir/cerrar panel de usuario
         userIcon.addEventListener('click', toggleUserDropdown);
-
-        // Evento de clic en cerrar dropdown
         userClose.addEventListener('click', closeUserDropdown);
-
-        // Evento de clic en overlay (fondo oscuro)
         userOverlay.addEventListener('click', closeUserDropdown);
 
         // Evitar que los clics dentro del dropdown se propaguen
@@ -523,15 +500,11 @@ document.addEventListener('DOMContentLoaded', function() {
             close: closeUserDropdown,
             toggle: toggleUserDropdown
         };
-
-        console.log('Módulo de usuario inicializado correctamente');
     }
 
-    // FUNCIONALIDAD DEL CARRITO
+    // Inicialización del módulo de carrito
     function initCartModule() {
-        console.log('Inicializando módulo de carrito');
-
-        // Si estamos en la página de carrito, solo actualizamos el contador pero no inicializamos el dropdown
+        // Si estamos en la página de carrito, solo actualizamos el contador
         if (isCartPage) {
             // Cargar carrito desde localStorage
             try {
@@ -543,11 +516,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Error al cargar el carrito: ', e);
             }
 
-            // Actualizar contador (aunque no sea visible en la página de carrito)
-            // Esto es útil si hay otras partes de la app que necesitan esta información
+            // Actualizar contador
             updateCartCount();
 
-            // Dispara un evento para informar que la navbar está lista
+            // Notificar que la navbar está lista
             document.dispatchEvent(new CustomEvent('navbarReady'));
             return;
         }
@@ -562,7 +534,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Error al cargar el carrito: ', e);
         }
 
-        // Elementos del DOM
+        // Elementos del DOM para el carrito
         const cartIcon = document.querySelector('.cart-icon');
         const cartCount = document.querySelector('.cart-count');
         const cartDropdown = document.getElementById('cart-dropdown');
@@ -571,20 +543,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const cartItems = document.getElementById('cart-items');
         const cartTotal = document.getElementById('cart-total');
 
-        // Verificar que los elementos existan
         if (!cartIcon || !cartDropdown || !cartOverlay || !cartClose) {
             console.error('Elementos del carrito no encontrados');
             return;
         }
 
-        // Función para abrir/cerrar el carrito
+        // Abrir/cerrar el carrito
         function toggleCart(e) {
             if (e) {
                 e.preventDefault();
                 e.stopPropagation();
             }
 
-            console.log('Toggle cart dropdown');
             cartDropdown.classList.toggle('active');
             cartOverlay.classList.toggle('active');
 
@@ -597,19 +567,19 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // Función para cerrar el carrito
+        // Cerrar el carrito
         function closeCart() {
             cartDropdown.classList.remove('active');
             cartOverlay.classList.remove('active');
             document.body.classList.remove('cart-open');
         }
 
-        // Función para formatear precios
+        // Formatear precios con dos decimales y símbolo €
         function formatPrice(price) {
             return `${price.toFixed(2)} €`;
         }
 
-        // Función para renderizar el contenido del carrito
+        // Renderizar el contenido del carrito
         function renderCart() {
             // Limpiar el contenido actual
             cartItems.innerHTML = '';
@@ -685,7 +655,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // Función para actualizar la cantidad de un producto
+        // Actualizar cantidad de un producto en el carrito
         function updateItemQuantity(id, change) {
             const itemIndex = cart.items.findIndex(item => item.id === id);
 
@@ -710,7 +680,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // Función para eliminar un producto del carrito
+        // Eliminar un producto del carrito
         function removeFromCart(id) {
             cart.items = cart.items.filter(item => item.id !== id);
 
@@ -725,7 +695,7 @@ document.addEventListener('DOMContentLoaded', function() {
             saveCart();
         }
 
-        // Función para añadir un producto al carrito
+        // Añadir un producto al carrito
         function addToCart(product) {
             // Verificar si el producto ya está en el carrito
             const existingItemIndex = cart.items.findIndex(item => item.id === product.id);
@@ -757,12 +727,12 @@ document.addEventListener('DOMContentLoaded', function() {
             showNotification(`${product.name} añadido al carrito`);
         }
 
-        // Función para recalcular el total del carrito
+        // Recalcular el total del carrito
         function recalculateTotal() {
             cart.total = cart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         }
 
-        // Función para actualizar el contador del carrito
+        // Actualizar el contador del carrito
         function updateCartCount() {
             const totalItems = cart.items.reduce((sum, item) => sum + item.quantity, 0);
             const cartCount = document.querySelector('.cart-count');
@@ -779,12 +749,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // Función para guardar el carrito en localStorage
+        // Guardar el carrito en localStorage
         function saveCart() {
             localStorage.setItem('cart', JSON.stringify(cart));
         }
 
-        // Función para mostrar notificación
+        // Mostrar notificación de acción realizada
         function showNotification(message) {
             // Verificar si ya existe una notificación
             let notification = document.querySelector('.notification');
@@ -799,7 +769,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Actualizar mensaje
             notification.textContent = message;
 
-            // Mostrar notificación
+            // Mostrar notificación con animación
             setTimeout(() => {
                 notification.classList.add('notification-show');
             }, 100);
@@ -810,16 +780,16 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 3000);
         }
 
-        // Asignar eventos a botones de añadir al carrito (para productos mostrados en la página)
+        // Configurar botones de añadir al carrito en productos de la página
         function setupAddToCartButtons() {
             document.querySelectorAll('.product-add-cart').forEach(button => {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
 
-                    // Obtener los datos del producto desde el data-attribute
+                    // Obtener datos del producto desde el data-attribute
                     const productId = this.dataset.id;
 
-                    // Simulación de producto (en una aplicación real, esto vendría de tu API o base de datos)
+                    // Crear objeto de producto con los datos disponibles
                     const product = {
                         id: productId,
                         name: this.dataset.name || 'Zapatilla',
@@ -833,18 +803,18 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // Solo configurar eventos si NO estamos en la página de carrito
+        // Eventos para el carrito
         if (!isCartPage) {
-            // Evento de clic en icono de carrito
+            // Icono del carrito
             cartIcon.addEventListener('click', toggleCart);
 
-            // Evento de clic en cerrar carrito
+            // Botón cerrar carrito
             cartClose.addEventListener('click', closeCart);
 
-            // Evento de clic en overlay (fondo oscuro)
+            // Fondo oscuro (overlay)
             cartOverlay.addEventListener('click', closeCart);
 
-            // Evitar que los clics dentro del dropdown se propaguen
+            // Evitar que clics en el dropdown se propaguen
             cartDropdown.addEventListener('click', function(e) {
                 e.stopPropagation();
             });
@@ -855,7 +825,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateCartCount();
         setupAddToCartButtons();
 
-        // Exponer API para usar desde fuera - disponible incluso en la página de carrito
+        // API pública del carrito para otros scripts
         window.cartAPI = {
             addToCart,
             updateItemQuantity,
@@ -886,11 +856,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         };
 
-        // Disparar evento de que la navbar está lista
+        // Notificar que la navbar está lista
         document.dispatchEvent(new CustomEvent('navbarReady'));
     }
 
-    // Inicializar los elementos de la navbar
+    // Inicializar elementos interactivos de la navbar
     function initNavbarElements() {
         // Manejar filtros (solo en la página principal)
         if (isHomePage) {
@@ -936,7 +906,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Inicializar
+    // Función principal de inicialización
     function init() {
         // Aplicar el estilo inicial según la página
         if (!isHomePage) {
@@ -944,24 +914,16 @@ document.addEventListener('DOMContentLoaded', function() {
             navbarContainer.classList.add('navbar-inner-page');
         }
 
-        // Evento de scroll (solo afecta a la página de inicio)
+        // Configurar eventos y comportamientos
         window.addEventListener('scroll', handleScroll);
-
-        // Configurar el indicador de scroll (solo en home)
         setupScrollIndicator();
-
-        // Configurar video (solo en home)
         setupVideo();
-
-        // Inicializar elementos interactivos de la navbar
         initNavbarElements();
 
-        // Inicializar módulos
+        // Inicializar módulos interactivos
         initSearchModule();
         initUserModule();
         initCartModule();
-
-        console.log('Navbar completamente inicializada');
     }
 
     // Ejecutar inicialización

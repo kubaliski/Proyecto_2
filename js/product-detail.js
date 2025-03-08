@@ -1,24 +1,16 @@
 /**
- * Detalle de producto
- * - Carga dinámica de datos del producto según el ID de URL
- * - Gestión de cantidad
- * - Añadir al carrito
- * - Mostrar productos relacionados
+ * Gestión de la product page
+ *
+ * Este script maneja la visualización de información detallada de un producto,
+ * gestión de cantidades, adición al carrito y productos relacionados.
+ *
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Product detail script loaded');
-
-    // Inicializar la página de producto
     initProductDetail();
 });
 
-/**
- * Inicializa la página de detalle de producto
- * - Extrae el ID del producto de la URL
- * - Carga los datos del producto
- * - Configura los eventos
- */
+// Inicializa la product page
 function initProductDetail() {
     // Obtener el ID del producto de la URL
     const urlParams = new URLSearchParams(window.location.search);
@@ -37,13 +29,9 @@ function initProductDetail() {
     setupProductEvents();
 }
 
-/**
- * Carga los datos del producto basados en su ID
- * @param {number} productId - ID del producto a cargar
- */
+// Carga los datos del producto seleccionado
 function loadProductData(productId) {
     // Buscar el producto en el array de productos
-    // Asumimos que el array "productos" está disponible desde products.js
     const producto = productos.find(p => p.id === productId);
 
     // Si no se encuentra el producto, mostrar error
@@ -59,9 +47,7 @@ function loadProductData(productId) {
     loadRelatedProducts(producto);
 }
 
-/**
- * Muestra un mensaje de producto no encontrado
- */
+// Muestra un mensaje cuando el producto no se encuentra
 function showProductNotFound() {
     const container = document.getElementById('product-detail-container');
 
@@ -78,10 +64,7 @@ function showProductNotFound() {
     }
 }
 
-/**
- * Llena la página con los datos del producto
- * @param {Object} producto - Objeto con los datos del producto
- */
+// Inserta los datos del producto en la página
 function populateProductPage(producto) {
     // Calcular precio con descuento
     const precioFinal = producto.descuento > 0
@@ -108,10 +91,9 @@ function populateProductPage(producto) {
         }
         mainImage.alt = producto.nombre;
 
-        // Configurar la función de error para usar la imagen de placeholder
+        // Imagen de respaldo si hay error
         mainImage.onerror = function() {
             this.src = 'assets/products/shoe-placeholder.png';
-            console.log('Error cargando la imagen, usando placeholder');
         };
     }
 
@@ -131,17 +113,15 @@ function populateProductPage(producto) {
 
     priceElement.textContent = `${precioFinal.toFixed(2)} €`;
 
-    // Mostrar/ocultar elementos de descuento según corresponda
+    // Mostrar/ocultar elementos de descuento
     if (producto.descuento > 0) {
         originalPriceElement.textContent = `${producto.precio.toFixed(2)} €`;
 
-        // Actualizar badge de descuento en la imagen (usando la nueva clase detail-product-discount)
         if (discountBadgeElement) {
             discountBadgeElement.textContent = `-${producto.descuento}%`;
-            discountBadgeElement.style.display = 'block'; // Mostrar el badge
+            discountBadgeElement.style.display = 'block';
         }
 
-        // Actualizar texto de descuento en los precios (usando la nueva clase detail-product-discount)
         if (discountPriceElement) {
             discountPriceElement.textContent = `-${producto.descuento}%`;
             discountPriceElement.style.display = 'inline-block';
@@ -151,7 +131,6 @@ function populateProductPage(producto) {
     } else {
         originalPriceElement.style.display = 'none';
 
-        // Ocultar badge de descuento y texto de descuento
         if (discountBadgeElement) {
             discountBadgeElement.style.display = 'none';
         }
@@ -223,7 +202,7 @@ function populateProductPage(producto) {
 
     featuresElement.innerHTML = caracteristicasEspecificas;
 
-    // Guardar el ID del producto para el botón de añadir al carrito
+    // Configuración del botón de añadir al carrito
     const addToCartBtn = document.getElementById('add-to-cart');
     if (addToCartBtn) {
         addToCartBtn.setAttribute('data-id', producto.id);
@@ -241,7 +220,7 @@ function populateProductPage(producto) {
         }
     }
 
-    // Actualizar estado de stock utilizando la nueva propiedad stock
+    // Actualizar estado de stock
     const stockBadge = document.querySelector('.stock-badge');
     if (stockBadge) {
         if (producto.stock > 10) {
@@ -257,9 +236,7 @@ function populateProductPage(producto) {
     }
 }
 
-/**
- * Configura los eventos de la página de producto
- */
+// Configura los eventos de la página de producto
 function setupProductEvents() {
     // Obtener el producto actual
     const urlParams = new URLSearchParams(window.location.search);
@@ -278,6 +255,7 @@ function setupProductEvents() {
         quantityInput.setAttribute('max', producto.stock);
     }
 
+    // Evento para disminuir cantidad
     if (decreaseBtn && quantityInput) {
         decreaseBtn.addEventListener('click', function() {
             const currentValue = parseInt(quantityInput.value);
@@ -287,6 +265,7 @@ function setupProductEvents() {
         });
     }
 
+    // Evento para aumentar cantidad
     if (increaseBtn && quantityInput) {
         increaseBtn.addEventListener('click', function() {
             const currentValue = parseInt(quantityInput.value);
@@ -307,7 +286,7 @@ function setupProductEvents() {
         });
     }
 
-    // Evitar que el input de cantidad pueda ser menor a 1 o mayor que el stock
+    // Validación para el input de cantidad
     if (quantityInput) {
         quantityInput.addEventListener('change', function() {
             let value = parseInt(this.value);
@@ -322,13 +301,7 @@ function setupProductEvents() {
     }
 }
 
-/**
- * Añade el producto actual al carrito
- */
-
-/**
- * Añade el producto actual al carrito
- */
+// Añade el producto actual al carrito
 function addProductToCart() {
     const addToCartBtn = document.getElementById('add-to-cart');
     const quantityInput = document.getElementById('product-quantity');
@@ -340,21 +313,21 @@ function addProductToCart() {
 
     if (!productId || isNaN(quantity)) return;
 
-    // Buscar el producto en el array de productos
+    // Buscar el producto
     const producto = productos.find(p => p.id === parseInt(productId));
 
     if (!producto) return;
 
-    // Verificar si hay suficiente stock
+    // Verificar stock
     if (producto.stock <= 0) {
         mostrarNotificacion('Lo sentimos, este producto está agotado');
         return;
     }
 
-    // Verificar si la cantidad solicitada excede el stock disponible
+    // Verificar cantidad solicitada
     if (quantity > producto.stock) {
         mostrarNotificacion(`Solo hay ${producto.stock} unidades disponibles`);
-        quantityInput.value = producto.stock; // Ajustar la cantidad al stock disponible
+        quantityInput.value = producto.stock;
         return;
     }
 
@@ -363,33 +336,29 @@ function addProductToCart() {
         ? producto.precio - (producto.precio * producto.descuento / 100)
         : producto.precio;
 
-    // Verificar si existe la API del carrito (desde cart.js)
+    // Usar la API del carrito
     if (window.cartAPI && typeof window.cartAPI.addToCart === 'function') {
-        // Crear el objeto de producto para añadir al carrito
+        // Crear objeto del producto
         const productToAdd = {
             id: producto.id.toString(),
             name: producto.nombre,
             price: precioFinal,
             image: producto.imagen || 'assets/products/shoe-placeholder.png',
-            quantity: quantity  // Pasar la cantidad como un parámetro
+            quantity: quantity
         };
 
-        // Añadir al carrito una sola vez con la cantidad especificada
+        // Añadir al carrito
         window.cartAPI.addToCart(productToAdd);
 
-        // Mostrar notificación de éxito
+        // Mostrar notificación
         mostrarNotificacion(`${quantity}x ${producto.nombre} añadido al carrito`);
     } else {
-        // Fallback si no está disponible la API del carrito
-        console.log(`Se añadirían ${quantity} unidades del producto ${producto.nombre} al carrito`);
+        // Método alternativo si no está disponible la API
         mostrarNotificacion(`${quantity}x ${producto.nombre} añadido al carrito`);
     }
 }
 
-/**
- * Carga los productos relacionados
- * @param {Object} producto - Producto actual para buscar relacionados
- */
+// Carga los productos relacionados
 function loadRelatedProducts(producto) {
     const container = document.getElementById('related-products-grid');
     if (!container) return;
@@ -455,10 +424,7 @@ function loadRelatedProducts(producto) {
     });
 }
 
-/**
- * Función para mostrar notificación (reutilizada de otros scripts)
- * @param {string} mensaje - Mensaje a mostrar
- */
+// Muestra una notificación al usuario
 function mostrarNotificacion(mensaje) {
     // Verificar si ya existe una notificación
     let notificacion = document.querySelector('.notification');
@@ -480,11 +446,7 @@ function mostrarNotificacion(mensaje) {
     }, 3000);
 }
 
-/**
- * Función para capitalizar primera letra (reutilizada de products.js)
- * @param {string} string - Texto a capitalizar
- * @returns {string} Texto con la primera letra en mayúscula
- */
+// Capitaliza la primera letra de un texto
 function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }

@@ -1,21 +1,22 @@
 /**
- * Funcionalidad para la navbar
- * - Cambio de apariencia al hacer scroll
+ * Funcionalidad de la navbar
+ *
+ * Este script gestiona los comportamientos dinámicos de la barra de navegación,
+ * incluyendo el cambio de apariencia al hacer scroll y la interacción con el video.
+ *
  */
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Navbar script loaded');
 
+document.addEventListener('DOMContentLoaded', function() {
     // Elementos del DOM
     const navbar = document.getElementById('navbar');
     const heroVideo = document.getElementById('hero-video');
 
     // Verificar que los elementos esenciales existan
     if (!navbar) {
-        console.error('Elementos de la navbar no encontrados');
         return;
     }
 
-    // Función para manejar el cambio de apariencia al hacer scroll
+    // Maneja el cambio de apariencia de la navbar al hacer scroll
     function handleScroll() {
         if (window.scrollY > 50) {
             navbar.classList.add('navbar-scrolled');
@@ -24,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Función para el scroll hacia abajo al hacer clic en el indicador
+    // Configura el scroll hacia abajo al hacer clic en el indicador
     function setupScrollIndicator() {
         const scrollIndicator = document.querySelector('.scroll-indicator');
         if (scrollIndicator) {
@@ -38,13 +39,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Función para asegurarse que el video funcione correctamente
+    // Gestiona la reproducción del video de fondo
     function setupVideo() {
         if (heroVideo) {
-            // Reintentar reproducción del video (solución para algunos navegadores móviles)
+            // Intenta reproducir el video (puede fallar en dispositivos móviles)
             heroVideo.play().catch(function(error) {
-                console.log('Auto-play prevented:', error);
-
                 // Añadir un botón para reproducir en móviles si es necesario
                 const heroContent = document.querySelector('.hero-content');
                 if (heroContent && !document.querySelector('.video-play-btn')) {
@@ -61,9 +60,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Inicializar
+    // Inicializa todas las funcionalidades
     function init() {
-        // Evento de scroll
+        // Configurar evento de scroll
         window.addEventListener('scroll', handleScroll);
 
         // Verificar estado inicial del scroll

@@ -1,6 +1,8 @@
 /**
- * Script para generar el componente de footer en todas las páginas
- * Evita la repetición de código HTML en múltiples archivos
+ * Componente Footer
+ *
+ * Este script genera dinámicamente el pie de página en todas las páginas del sitio
+ * y gestiona la funcionalidad del formulario de newsletter.
  */
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -102,56 +104,61 @@ document.addEventListener('DOMContentLoaded', function() {
     // Insertar el HTML en el footer
     footer.innerHTML = footerHtml;
 
-    // Manejar el envío del formulario de newsletter
-    const newsletterForm = document.querySelector('.newsletter-form');
-    if (newsletterForm) {
-        newsletterForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const emailInput = this.querySelector('input[type="email"]');
-
-            if (emailInput && emailInput.value) {
-                // Aquí iría la lógica para procesar la suscripción
-                const email = emailInput.value;
-
-                // Mostrar notificación usando el mismo estilo que en products.js
-                mostrarNotificacion(`¡Gracias por suscribirte! Recibirás tu 10% de descuento pronto.`);
-
-                // Limpiar el input
-                emailInput.value = '';
-            }
-        });
-    }
-
-    // Función para mostrar notificación mejorada
-    function mostrarNotificacion(mensaje) {
-        // Verificar si ya existe una notificación y eliminarla si es así
-        let notificacionExistente = document.querySelector('.notification');
-        if (notificacionExistente) {
-            notificacionExistente.remove();
-        }
-
-        // Crear elemento de notificación
-        const notificacion = document.createElement('div');
-        notificacion.className = 'notification';
-        notificacion.textContent = mensaje;
-
-        // Añadir al DOM
-        document.body.appendChild(notificacion);
-
-        // Forzar un reflow antes de añadir la clase para asegurar la transición
-        notificacion.offsetHeight;
-
-        // Mostrar la notificación
-        notificacion.classList.add('notification-show');
-
-        // Ocultar después de 3 segundos
-        setTimeout(() => {
-            notificacion.classList.remove('notification-show');
-
-            // Eliminar el elemento del DOM después de la transición
-            setTimeout(() => {
-                notificacion.remove();
-            }, 300); // 300ms es la duración de la transición
-        }, 3000);
-    }
+    // Gestionar el formulario de newsletter
+    setupNewsletterForm();
 });
+
+// Configura el formulario de newsletter y su comportamiento
+function setupNewsletterForm() {
+    const newsletterForm = document.querySelector('.newsletter-form');
+    if (!newsletterForm) return;
+
+    newsletterForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const emailInput = this.querySelector('input[type="email"]');
+
+        if (emailInput && emailInput.value) {
+            // Procesar la suscripción (en una implementación real se enviaría a backend)
+            const email = emailInput.value;
+
+            // Mostrar notificación de éxito
+            mostrarNotificacion(`¡Gracias por suscribirte! Recibirás tu 10% de descuento pronto.`);
+
+            // Limpiar el input
+            emailInput.value = '';
+        }
+    });
+}
+
+// Muestra una notificación al usuario
+function mostrarNotificacion(mensaje) {
+    // Verificar si ya existe una notificación y eliminarla
+    let notificacionExistente = document.querySelector('.notification');
+    if (notificacionExistente) {
+        notificacionExistente.remove();
+    }
+
+    // Crear elemento de notificación
+    const notificacion = document.createElement('div');
+    notificacion.className = 'notification';
+    notificacion.textContent = mensaje;
+
+    // Añadir al DOM
+    document.body.appendChild(notificacion);
+
+    // Forzar un reflow antes de añadir la clase para asegurar la transición
+    notificacion.offsetHeight;
+
+    // Mostrar la notificación
+    notificacion.classList.add('notification-show');
+
+    // Ocultar después de 3 segundos
+    setTimeout(() => {
+        notificacion.classList.remove('notification-show');
+
+        // Eliminar el elemento del DOM después de la transición
+        setTimeout(() => {
+            notificacion.remove();
+        }, 300); // 300ms es la duración de la transición
+    }, 3000);
+}

@@ -1,18 +1,17 @@
 /**
- * Gestión dinámica de productos
- * - Generación de templates para productos
- * - Filtrado de productos con drawer
- * - Renderizado dinámico
+ * Gestión de productos y filtros
+ *
+ * Este script maneja la visualización, filtrado y ordenamiento
+ * de productos en la tienda, así como la interacción con el carrito.
+ *
  */
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('Products script loaded');
     initProducts();
     setupFilterDrawer();
 });
 
-// Array con datos de productos
-// Array con datos de productos
+// Catálogo de productos disponibles
 const productos = [
     {
         id: 1,
@@ -25,7 +24,7 @@ const productos = [
         destacado: true,
         imagen: 'assets/products/shoe_1.png',
         marca: 'SportMax',
-        stock: 15  // Añadido stock como número
+        stock: 15
     },
     {
         id: 2,
@@ -127,7 +126,7 @@ const productos = [
         color: '#FFFF00',  // amarillo
         colorNombre: 'amarillo',
         destacado: false,
-        imagen: '',  // vacío a propósito para mostrar el fallback en caso de que no haya imagen
+        imagen: '',  // Imagen vacía intencionalmente para probar el fallback
         marca: 'SummerFeel',
         stock: 0  // Sin stock
     },
@@ -145,18 +144,20 @@ let currentFilters = {
 
 let currentSort = 'destacados';
 
-// Función para inicializar los productos y filtros
+// Inicializa los productos y filtros en la página
 function initProducts() {
-    //Exponemos los productos
+    // Exponemos los productos para que otros módulos puedan acceder
     window.productosDisponibles = productos;
 
+    // Inicialización de componentes
     renderProductos(productos);
     setupFiltros();
     setupOrdenamiento();
 }
 
-// Función para configurar el drawer de filtros
+// Configura el drawer de filtros
 function setupFilterDrawer() {
+    // Selección de elementos
     const filterToggle = document.getElementById('filter-toggle');
     const mobileFilterButton = document.getElementById('mobile-filter-button');
     const filtersDrawer = document.getElementById('filters-drawer');
@@ -165,22 +166,24 @@ function setupFilterDrawer() {
     const applyFiltersBtn = document.getElementById('apply-filters');
     const body = document.body;
 
-    // Función para abrir el drawer
+    // Funciones para manejar el drawer
     function openFilterDrawer() {
         filtersDrawer.classList.add('active');
         menuOverlay.classList.add('active');
         body.classList.add('menu-open');
     }
 
-    // Función para cerrar el drawer
     function closeFilterDrawer() {
         filtersDrawer.classList.remove('active');
         menuOverlay.classList.remove('active');
         body.classList.remove('menu-open');
     }
 
-    // Función para alternar el estado del drawer
-    function toggleFilterDrawer() {
+    // Definimos la función de manera explícita para mejor compatibilidad
+    function handleMobileFilterClick(e) {
+        e.preventDefault();
+
+        // Comprobamos el estado actual del drawer y lo alternamos
         if (filtersDrawer.classList.contains('active')) {
             closeFilterDrawer();
         } else {
@@ -188,7 +191,7 @@ function setupFilterDrawer() {
         }
     }
 
-    // Evento para abrir el drawer desde la navbar
+    // Eventos para el drawer de filtros
     if (filterToggle) {
         filterToggle.addEventListener('click', function(e) {
             e.preventDefault();
@@ -196,22 +199,24 @@ function setupFilterDrawer() {
         });
     }
 
-    // Evento para alternar el drawer desde el botón móvil
+    // Enfoque directo para el botón móvil: sin usar removeEventListener para evitar problemas de referencia
     if (mobileFilterButton) {
-        mobileFilterButton.addEventListener('click', function(e) {
-            e.preventDefault();
-            toggleFilterDrawer();
-        });
+        // Limpiamos handlers antiguos clonando el nodo (enfoque más radical pero efectivo)
+        const newMobileButton = mobileFilterButton.cloneNode(true);
+        if (mobileFilterButton.parentNode) {
+            mobileFilterButton.parentNode.replaceChild(newMobileButton, mobileFilterButton);
+        }
+
+        // Agregamos el nuevo event listener al botón clonado
+        newMobileButton.addEventListener('click', handleMobileFilterClick);
     }
 
-    // Evento para cerrar con el botón X
     if (filtersDrawerClose) {
         filtersDrawerClose.addEventListener('click', function() {
             closeFilterDrawer();
         });
     }
 
-    // Evento para cerrar con el overlay
     if (menuOverlay) {
         menuOverlay.addEventListener('click', function() {
             // Cerrar el drawer de filtros si está abierto
@@ -221,7 +226,6 @@ function setupFilterDrawer() {
         });
     }
 
-    // Evento para aplicar filtros y cerrar drawer
     if (applyFiltersBtn) {
         applyFiltersBtn.addEventListener('click', function(e) {
             e.preventDefault();
@@ -231,9 +235,19 @@ function setupFilterDrawer() {
     }
 }
 
+// Inicialización diferida para asegurar que todos los elementos están cargados
+document.addEventListener('DOMContentLoaded', function() {
+    // Las funciones originales se mantienen
+    initProducts();
+
+    // Ejecutar setupFilterDrawer después de un pequeño retraso
+    setTimeout(function() {
+        setupFilterDrawer();
+    }, 100);
+});
 
 
-// Función para generar HTML de un producto mediante template literal
+// Genera el HTML para un producto individual
 function generarProductoTemplate(producto) {
     // Calcular precio con descuento
     const precioFinal = producto.descuento > 0
@@ -248,7 +262,6 @@ function generarProductoTemplate(producto) {
                 ${producto.descuento > 0 ? `<span class="product-discount">-${producto.descuento}%</span>` : ''}
                 ${producto.destacado ? '<span class="product-featured-badge">Destacado</span>' : ''}
 
-                <!-- Nueva lupa de vista de detalle -->
                 <a href="producto.html?id=${producto.id}" class="product-detail-link">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="8"></circle>
@@ -280,12 +293,12 @@ function generarProductoTemplate(producto) {
     `;
 }
 
-// Función para renderizar lista de productos
+// Renderiza la lista de productos en la página
 function renderProductos(productos) {
     const productosContainer = document.getElementById('products-grid');
     if (!productosContainer) return;
 
-    // Limpiar container
+    // Limpiar contenedor
     productosContainer.innerHTML = '';
 
     // Si no hay productos mostrar mensaje
@@ -294,7 +307,7 @@ function renderProductos(productos) {
         return;
     }
 
-    // Crear fragment para mejor rendimiento
+    // Usar fragment para mejor rendimiento
     const fragment = document.createDocumentFragment();
 
     // Renderizar cada producto
@@ -302,7 +315,7 @@ function renderProductos(productos) {
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = generarProductoTemplate(producto);
 
-        // Añadir evento al botón
+        // Añadir evento al botón de carrito
         const addButton = tempDiv.querySelector('.product-add-cart');
         if (addButton) {
             addButton.addEventListener('click', function(e) {
@@ -327,18 +340,18 @@ function renderProductos(productos) {
     }
 }
 
-// Función para configurar los filtros
+// Configura los filtros de productos
 function setupFiltros() {
-    // Obtener todos los filtros
+    // Obtener formulario de filtros
     const filtrosForm = document.getElementById('filters-form');
     if (!filtrosForm) return;
 
-    // Obtener categorías únicas y marcas para generar filtros
+    // Obtener categorías únicas y otros valores para generar filtros
     const categorias = [...new Set(productos.map(p => p.categoria))];
     const marcas = [...new Set(productos.map(p => p.marca))];
     const colores = [...new Set(productos.map(p => p.color))];
 
-    // Generar HTML para filtros de categoría
+    // Generar filtros de categoría
     const categoriasContainer = document.getElementById('categorias-filter');
     if (categoriasContainer) {
         categorias.forEach(categoria => {
@@ -352,7 +365,7 @@ function setupFiltros() {
         });
     }
 
-    // Generar HTML para filtros de marca
+    // Generar filtros de marca
     const marcasContainer = document.getElementById('marcas-filter');
     if (marcasContainer) {
         marcas.forEach(marca => {
@@ -366,7 +379,7 @@ function setupFiltros() {
         });
     }
 
-    // Generar HTML para filtros de color
+    // Generar filtros de color
     const coloresContainer = document.getElementById('colores-filter');
     if (coloresContainer) {
         colores.forEach(color => {
@@ -383,6 +396,7 @@ function setupFiltros() {
             coloresContainer.appendChild(label);
         });
     }
+
     // Botón para limpiar filtros
     const limpiarFiltrosBtn = document.getElementById('clear-filters');
     if (limpiarFiltrosBtn) {
@@ -410,7 +424,7 @@ function setupFiltros() {
     }
 }
 
-// Función para aplicar filtros
+// Aplica los filtros seleccionados a la lista de productos
 function aplicarFiltros() {
     const form = document.getElementById('filters-form');
     if (!form) return;
@@ -477,7 +491,7 @@ function aplicarFiltros() {
     renderProductos(productosFiltrados);
 }
 
-// Función para actualizar etiquetas de filtros activos
+// Actualiza las etiquetas visuales de filtros activos
 function actualizarEtiquetasFiltrosActivos() {
     const container = document.getElementById('active-filters');
     if (!container) return;
@@ -495,10 +509,10 @@ function actualizarEtiquetasFiltrosActivos() {
         return;
     }
 
-    // Crear fragment para mejor rendimiento
+    // Usar fragment para mejor rendimiento
     const fragment = document.createDocumentFragment();
 
-    // Añadir etiquetas por categoría
+    // Etiquetas por categoría
     currentFilters.categorias.forEach(categoria => {
         const tag = crearEtiquetaFiltro(`Categoría: ${capitalize(categoria)}`, () => {
             // Eliminar categoría del filtro actual
@@ -512,7 +526,7 @@ function actualizarEtiquetasFiltrosActivos() {
         fragment.appendChild(tag);
     });
 
-    // Añadir etiquetas por marca
+    // Etiquetas por marca
     currentFilters.marcas.forEach(marca => {
         const tag = crearEtiquetaFiltro(`Marca: ${marca}`, () => {
             // Eliminar marca del filtro actual
@@ -526,7 +540,7 @@ function actualizarEtiquetasFiltrosActivos() {
         fragment.appendChild(tag);
     });
 
-    // Añadir etiquetas por color
+    // Etiquetas por color
     currentFilters.colores.forEach(color => {
         const producto = productos.find(p => p.color === color);
         const colorNombre = producto ? producto.colorNombre : color;
@@ -543,7 +557,7 @@ function actualizarEtiquetasFiltrosActivos() {
         fragment.appendChild(tag);
     });
 
-    // Añadir etiqueta por destacado
+    // Etiqueta por destacado
     if (currentFilters.destacados) {
         const tag = crearEtiquetaFiltro("Solo destacados", () => {
             // Actualizar estado
@@ -557,7 +571,7 @@ function actualizarEtiquetasFiltrosActivos() {
         fragment.appendChild(tag);
     }
 
-    // Añadir etiqueta por rango de precio
+    // Etiqueta por rango de precio
     if (currentFilters.precioMin > 0 || (currentFilters.precioMax > 0 && currentFilters.precioMax < 1000)) {
         const tag = crearEtiquetaFiltro(`Precio: €${currentFilters.precioMin} - €${currentFilters.precioMax}`, () => {
             // Restablecer precio
@@ -578,7 +592,7 @@ function actualizarEtiquetasFiltrosActivos() {
     container.appendChild(fragment);
 }
 
-// Función para crear una etiqueta de filtro
+// Crea una etiqueta visual para un filtro activo
 function crearEtiquetaFiltro(texto, callbackRemover) {
     const tag = document.createElement('div');
     tag.className = 'filter-tag';
@@ -596,18 +610,18 @@ function crearEtiquetaFiltro(texto, callbackRemover) {
     return tag;
 }
 
-// Función para configurar ordenamiento
+// Configura el selector de ordenamiento
 function setupOrdenamiento() {
     const sortSelect = document.getElementById('sort-select');
     if (!sortSelect) return;
 
     sortSelect.addEventListener('change', function() {
         currentSort = this.value;
-        aplicarFiltros(); // Reaplica los filtros con el nuevo orden
+        aplicarFiltros();
     });
 }
 
-// Función para ordenar productos
+// Ordena los productos según el criterio seleccionado
 function ordenarProductos(productos, criterio) {
     const productosOrdenados = [...productos];
 
@@ -641,19 +655,14 @@ function ordenarProductos(productos, criterio) {
                 return a.destacado ? -1 : 1;
             });
             break;
-        default:
-            // No hacemo nada
-            break;
     }
 
     return productosOrdenados;
 }
 
-// Función para añadir producto al carrito
+// Añade un producto al carrito
 function agregarAlCarrito(idProducto) {
-    console.log(`Producto ${idProducto} añadido al carrito`);
-
-    // Encontrar el producto
+    // Encontramos el producto
     const producto = productos.find(p => p.id === idProducto);
     if (!producto) return;
 
@@ -662,9 +671,8 @@ function agregarAlCarrito(idProducto) {
         ? producto.precio - (producto.precio * producto.descuento / 100)
         : producto.precio;
 
-    // Verificar si window.cartAPI existe (añadido por cart.js)
+    // Usar la API del carrito si está disponible
     if (window.cartAPI && typeof window.cartAPI.addToCart === 'function') {
-        // Usar la API del carrito para añadir el producto
         window.cartAPI.addToCart({
             id: producto.id.toString(),
             name: producto.nombre,
@@ -672,8 +680,7 @@ function agregarAlCarrito(idProducto) {
             image: producto.imagen || 'assets/products/shoe-placeholder.png'
         });
     } else {
-        // Fallback al método original
-        // Actualizar contador del carrito
+        // Método alternativo si no está disponible la API
         const cartCount = document.querySelector('.cart-count');
         if (cartCount) {
             let count = parseInt(cartCount.textContent);
@@ -685,7 +692,7 @@ function agregarAlCarrito(idProducto) {
     }
 }
 
-// Función para mostrar notificación
+// Muestra una notificación al usuario
 function mostrarNotificacion(mensaje) {
     // Verificar si ya existe una notificación
     let notificacion = document.querySelector('.notification');
@@ -707,7 +714,7 @@ function mostrarNotificacion(mensaje) {
     }, 3000);
 }
 
-// Utilidad para capitalizar primera letra
+// Ponemos en mayúscula la primera letra de un string
 function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
