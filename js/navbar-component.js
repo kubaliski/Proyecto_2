@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function() {
     navbarContainer.innerHTML = navbarHTML;
 
     // Cambia apariencia de la navbar al hacer scroll
-    function handleScroll() {
+    const handleScroll = () =>  {
         if (!isHomePage || window.scrollY > 50) {
             navbarContainer.classList.add('navbar-scrolled');
         } else if (isHomePage && window.scrollY <= 50) {
@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Configurar scroll hacia abajo en la página principal
-    function setupScrollIndicator() {
+    const  setupScrollIndicator = () =>  {
         if (isHomePage) {
             const scrollIndicator = document.querySelector('.scroll-indicator');
             if (scrollIndicator) {
@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Intenta reproducir el video de fondo en la página principal
-    function setupVideo() {
+    const setupVideo = () =>  {
         if (isHomePage) {
             const heroVideo = document.getElementById('hero-video');
             if (heroVideo) {
@@ -265,7 +265,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Inicialización del módulo de búsqueda
-    function initSearchModule() {
+    const initSearchModule = () =>  {
         // Elementos del DOM para la búsqueda
         const searchIcon = document.querySelector('.search-icon');
         const searchDropdown = document.getElementById('search-dropdown');
@@ -300,14 +300,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Cerrar el buscador
-        function closeSearch() {
+        const  closeSearch = () =>  {
             searchDropdown.classList.remove('active');
             searchOverlay.classList.remove('active');
             document.body.classList.remove('search-open');
         }
 
         // Realizar búsqueda de productos
-        function performSearch(query) {
+        const performSearch = (query)  => {
             // Si la consulta está vacía, mostrar mensaje predeterminado
             if (!query || query.trim() === '') {
                 searchResults.innerHTML = '<div class="empty-search">Busca productos por nombre, categoría o marca</div>';
@@ -390,7 +390,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Aplicar filtros desde la búsqueda
-        function aplicarFiltrosBusqueda(query) {
+        const aplicarFiltrosBusqueda = (query) =>  {
             window.ultimaConsultaBusqueda = query;
             if (typeof window.aplicarFiltros === 'function') {
                 window.aplicarFiltros();
@@ -443,7 +443,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Inicialización del módulo de usuario
-    function initUserModule() {
+    const initUserModule = () =>  {
         // Elementos del DOM para el usuario
         const userIcon = document.querySelector('.user-icon');
         const userDropdown = document.getElementById('user-dropdown');
@@ -456,7 +456,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Abrir/cerrar el dropdown de usuario
-        function toggleUserDropdown(e) {
+        const toggleUserDropdown = (e)  => {
             if (e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -474,7 +474,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Cerrar el dropdown de usuario
-        function closeUserDropdown() {
+        const closeUserDropdown =()  =>  {
             userDropdown.classList.remove('active');
             userOverlay.classList.remove('active');
             document.body.classList.remove('user-open');
@@ -503,7 +503,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Inicialización del módulo de carrito
-    function initCartModule() {
+    const  initCartModule = ()  =>  {
         // Si estamos en la página de carrito, solo actualizamos el contador
         if (isCartPage) {
             // Cargar carrito desde localStorage
@@ -549,7 +549,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Abrir/cerrar el carrito
-        function toggleCart(e) {
+        const  toggleCart = (e)  =>  {
             if (e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -568,19 +568,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Cerrar el carrito
-        function closeCart() {
+        const closeCart = () =>  {
             cartDropdown.classList.remove('active');
             cartOverlay.classList.remove('active');
             document.body.classList.remove('cart-open');
         }
 
         // Formatear precios con dos decimales y símbolo €
-        function formatPrice(price) {
+        const  formatPrice = (price)  => {
             return `${price.toFixed(2)} €`;
         }
 
         // Renderizar el contenido del carrito
-        function renderCart() {
+        const  renderCart = ()  => {
             // Limpiar el contenido actual
             cartItems.innerHTML = '';
 
@@ -629,7 +629,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Configurar eventos para los botones de incrementar/decrementar cantidad
-        function setupQuantityButtons() {
+        const setupQuantityButtons = () =>  {
             // Botones de aumentar cantidad
             document.querySelectorAll('.increase-quantity').forEach(button => {
                 button.addEventListener('click', function() {
@@ -656,7 +656,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Actualizar cantidad de un producto en el carrito
-        function updateItemQuantity(id, change) {
+        const updateItemQuantity = (id, change) =>  {
             const itemIndex = cart.items.findIndex(item => item.id === id);
 
             if (itemIndex !== -1) {
@@ -681,7 +681,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Eliminar un producto del carrito
-        function removeFromCart(id) {
+        const removeFromCart = (id) =>  {
             cart.items = cart.items.filter(item => item.id !== id);
 
             // Actualizar el total
@@ -696,7 +696,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Añadir un producto al carrito
-        function addToCart(product) {
+        const addToCart = (product) =>  {
             // Verificar si el producto ya está en el carrito
             const existingItemIndex = cart.items.findIndex(item => item.id === product.id);
 
@@ -728,12 +728,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Recalcular el total del carrito
-        function recalculateTotal() {
+        const  recalculateTotal = () =>  {
             cart.total = cart.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         }
 
         // Actualizar el contador del carrito
-        function updateCartCount() {
+        const updateCartCount = () =>  {
             const totalItems = cart.items.reduce((sum, item) => sum + item.quantity, 0);
             const cartCount = document.querySelector('.cart-count');
 
@@ -750,12 +750,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Guardar el carrito en localStorage
-        function saveCart() {
+        const  saveCart = () =>  {
             localStorage.setItem('cart', JSON.stringify(cart));
         }
 
         // Mostrar notificación de acción realizada
-        function showNotification(message) {
+        const showNotification= (message) =>  {
             // Verificar si ya existe una notificación
             let notification = document.querySelector('.notification');
 
@@ -781,7 +781,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Configurar botones de añadir al carrito en productos de la página
-        function setupAddToCartButtons() {
+        const setupAddToCartButtons = () =>  {
             document.querySelectorAll('.product-add-cart').forEach(button => {
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -861,7 +861,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Inicializar elementos interactivos de la navbar
-    function initNavbarElements() {
+    const  initNavbarElements = () =>  {
         // Manejar filtros (solo en la página principal)
         if (isHomePage) {
             const filterToggle = document.getElementById('filter-toggle');
@@ -907,7 +907,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Función principal de inicialización
-    function init() {
+    const init =() =>  {
         // Aplicar el estilo inicial según la página
         if (!isHomePage) {
             navbarContainer.classList.add('navbar-scrolled');

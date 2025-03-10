@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Configura el formulario de newsletter y su comportamiento
-function setupNewsletterForm() {
+const  setupNewsletterForm  = () =>  {
     const newsletterForm = document.querySelector('.newsletter-form');
     if (!newsletterForm) return;
 
@@ -118,11 +118,11 @@ function setupNewsletterForm() {
         const emailInput = this.querySelector('input[type="email"]');
 
         if (emailInput && emailInput.value) {
-            // Procesar la suscripción (en una implementación real se enviaría a backend)
+            // Procesar la suscripción
             const email = emailInput.value;
 
             // Mostrar notificación de éxito
-            mostrarNotificacion(`¡Gracias por suscribirte! Recibirás tu 10% de descuento pronto.`);
+            mostrarNotificacionFooter(`¡Gracias por suscribirte! Recibirás tu 10% de descuento pronto.`);
 
             // Limpiar el input
             emailInput.value = '';
@@ -131,7 +131,7 @@ function setupNewsletterForm() {
 }
 
 // Muestra una notificación al usuario
-function mostrarNotificacion(mensaje) {
+const mostrarNotificacionFooter= (mensaje)  => {
     // Verificar si ya existe una notificación y eliminarla
     let notificacionExistente = document.querySelector('.notification');
     if (notificacionExistente) {

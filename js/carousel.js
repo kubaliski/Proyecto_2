@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const itemCount = items.length;
 
     // Actualiza la posición y estado del carrusel
-    function updateCarousel() {
+    const updateCarousel = () => {
         // Mover el carrusel horizontalmente
         carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
 
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Procesa el gesto de deslizamiento
-    function handleSwipe() {
+    const handleSwipe = () =>  {
         if (touchEndX < touchStartX - 50) {
             // Deslizamiento hacia la izquierda - avanzar
             currentIndex = (currentIndex + 1) % itemCount;

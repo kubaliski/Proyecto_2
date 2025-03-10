@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Inicializa la product page
-function initProductDetail() {
+const initProductDetail = () =>  {
     // Obtener el ID del producto de la URL
     const urlParams = new URLSearchParams(window.location.search);
     const productId = parseInt(urlParams.get('id'));
@@ -30,7 +30,7 @@ function initProductDetail() {
 }
 
 // Carga los datos del producto seleccionado
-function loadProductData(productId) {
+const loadProductData = (productId) =>  {
     // Buscar el producto en el array de productos
     const producto = productos.find(p => p.id === productId);
 
@@ -48,7 +48,7 @@ function loadProductData(productId) {
 }
 
 // Muestra un mensaje cuando el producto no se encuentra
-function showProductNotFound() {
+const showProductNotFound = ()  => {
     const container = document.getElementById('product-detail-container');
 
     if (container) {
@@ -65,7 +65,7 @@ function showProductNotFound() {
 }
 
 // Inserta los datos del producto en la página
-function populateProductPage(producto) {
+const populateProductPage = (producto) =>  {
     // Calcular precio con descuento
     const precioFinal = producto.descuento > 0
         ? producto.precio - (producto.precio * producto.descuento / 100)
@@ -237,7 +237,7 @@ function populateProductPage(producto) {
 }
 
 // Configura los eventos de la página de producto
-function setupProductEvents() {
+const setupProductEvents = () =>  {
     // Obtener el producto actual
     const urlParams = new URLSearchParams(window.location.search);
     const productId = parseInt(urlParams.get('id'));
@@ -273,7 +273,7 @@ function setupProductEvents() {
             if (currentValue < producto.stock) {
                 quantityInput.value = currentValue + 1;
             } else if (producto.stock > 0) {
-                mostrarNotificacion(`Solo hay ${producto.stock} unidades disponibles`);
+                mostrarNotificacionDetail(`Solo hay ${producto.stock} unidades disponibles`);
             }
         });
     }
@@ -295,14 +295,14 @@ function setupProductEvents() {
                 this.value = 1;
             } else if (value > producto.stock) {
                 this.value = producto.stock;
-                mostrarNotificacion(`Solo hay ${producto.stock} unidades disponibles`);
+                mostrarNotificacionDetail(`Solo hay ${producto.stock} unidades disponibles`);
             }
         });
     }
 }
 
 // Añade el producto actual al carrito
-function addProductToCart() {
+const addProductToCart = () =>  {
     const addToCartBtn = document.getElementById('add-to-cart');
     const quantityInput = document.getElementById('product-quantity');
 
@@ -320,13 +320,13 @@ function addProductToCart() {
 
     // Verificar stock
     if (producto.stock <= 0) {
-        mostrarNotificacion('Lo sentimos, este producto está agotado');
+        mostrarNotificacionDetail('Lo sentimos, este producto está agotado');
         return;
     }
 
     // Verificar cantidad solicitada
     if (quantity > producto.stock) {
-        mostrarNotificacion(`Solo hay ${producto.stock} unidades disponibles`);
+        mostrarNotificacionDetail(`Solo hay ${producto.stock} unidades disponibles`);
         quantityInput.value = producto.stock;
         return;
     }
@@ -351,15 +351,15 @@ function addProductToCart() {
         window.cartAPI.addToCart(productToAdd);
 
         // Mostrar notificación
-        mostrarNotificacion(`${quantity}x ${producto.nombre} añadido al carrito`);
+        mostrarNotificacionDetail(`${quantity}x ${producto.nombre} añadido al carrito`);
     } else {
         // Método alternativo si no está disponible la API
-        mostrarNotificacion(`${quantity}x ${producto.nombre} añadido al carrito`);
+        mostrarNotificacionDetail(`${quantity}x ${producto.nombre} añadido al carrito`);
     }
 }
 
 // Carga los productos relacionados
-function loadRelatedProducts(producto) {
+const loadRelatedProducts = (producto) =>  {
     const container = document.getElementById('related-products-grid');
     if (!container) return;
 
@@ -425,7 +425,7 @@ function loadRelatedProducts(producto) {
 }
 
 // Muestra una notificación al usuario
-function mostrarNotificacion(mensaje) {
+const mostrarNotificacionDetail = (mensaje) =>  {
     // Verificar si ya existe una notificación
     let notificacion = document.querySelector('.notification');
 
@@ -447,6 +447,6 @@ function mostrarNotificacion(mensaje) {
 }
 
 // Capitaliza la primera letra de un texto
-function capitalize(string) {
+const capitalize = (string) =>  {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }

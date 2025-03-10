@@ -145,7 +145,7 @@ let currentFilters = {
 let currentSort = 'destacados';
 
 // Inicializa los productos y filtros en la página
-function initProducts() {
+const initProducts = () =>  {
     // Exponemos los productos para que otros módulos puedan acceder
     window.productosDisponibles = productos;
 
@@ -156,7 +156,7 @@ function initProducts() {
 }
 
 // Configura el drawer de filtros
-function setupFilterDrawer() {
+const setupFilterDrawer = () =>  {
     // Selección de elementos
     const filterToggle = document.getElementById('filter-toggle');
     const mobileFilterButton = document.getElementById('mobile-filter-button');
@@ -167,20 +167,20 @@ function setupFilterDrawer() {
     const body = document.body;
 
     // Funciones para manejar el drawer
-    function openFilterDrawer() {
+    const  openFilterDrawer = () =>  {
         filtersDrawer.classList.add('active');
         menuOverlay.classList.add('active');
         body.classList.add('menu-open');
     }
 
-    function closeFilterDrawer() {
+    const closeFilterDrawer= ()  => {
         filtersDrawer.classList.remove('active');
         menuOverlay.classList.remove('active');
         body.classList.remove('menu-open');
     }
 
     // Definimos la función de manera explícita para mejor compatibilidad
-    function handleMobileFilterClick(e) {
+    const handleMobileFilterClick = (e) =>  {
         e.preventDefault();
 
         // Comprobamos el estado actual del drawer y lo alternamos
@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 // Genera el HTML para un producto individual
-function generarProductoTemplate(producto) {
+const generarProductoTemplate  = (producto)  => {
     // Calcular precio con descuento
     const precioFinal = producto.descuento > 0
         ? producto.precio - (producto.precio * producto.descuento / 100)
@@ -294,7 +294,7 @@ function generarProductoTemplate(producto) {
 }
 
 // Renderiza la lista de productos en la página
-function renderProductos(productos) {
+const renderProductos = (productos) =>  {
     const productosContainer = document.getElementById('products-grid');
     if (!productosContainer) return;
 
@@ -341,7 +341,7 @@ function renderProductos(productos) {
 }
 
 // Configura los filtros de productos
-function setupFiltros() {
+const setupFiltros = () =>  {
     // Obtener formulario de filtros
     const filtrosForm = document.getElementById('filters-form');
     if (!filtrosForm) return;
@@ -425,7 +425,7 @@ function setupFiltros() {
 }
 
 // Aplica los filtros seleccionados a la lista de productos
-function aplicarFiltros() {
+const aplicarFiltros = () =>  {
     const form = document.getElementById('filters-form');
     if (!form) return;
 
@@ -492,7 +492,7 @@ function aplicarFiltros() {
 }
 
 // Actualiza las etiquetas visuales de filtros activos
-function actualizarEtiquetasFiltrosActivos() {
+const actualizarEtiquetasFiltrosActivos = () =>  {
     const container = document.getElementById('active-filters');
     if (!container) return;
 
@@ -593,7 +593,7 @@ function actualizarEtiquetasFiltrosActivos() {
 }
 
 // Crea una etiqueta visual para un filtro activo
-function crearEtiquetaFiltro(texto, callbackRemover) {
+const crearEtiquetaFiltro = (texto, callbackRemover) =>  {
     const tag = document.createElement('div');
     tag.className = 'filter-tag';
     tag.innerHTML = `
@@ -611,7 +611,7 @@ function crearEtiquetaFiltro(texto, callbackRemover) {
 }
 
 // Configura el selector de ordenamiento
-function setupOrdenamiento() {
+const setupOrdenamiento = () =>  {
     const sortSelect = document.getElementById('sort-select');
     if (!sortSelect) return;
 
@@ -622,7 +622,7 @@ function setupOrdenamiento() {
 }
 
 // Ordena los productos según el criterio seleccionado
-function ordenarProductos(productos, criterio) {
+const ordenarProductos =(productos, criterio) => {
     const productosOrdenados = [...productos];
 
     switch (criterio) {
@@ -661,7 +661,7 @@ function ordenarProductos(productos, criterio) {
 }
 
 // Añade un producto al carrito
-function agregarAlCarrito(idProducto) {
+const agregarAlCarrito = (idProducto)  => {
     // Encontramos el producto
     const producto = productos.find(p => p.id === idProducto);
     if (!producto) return;
@@ -693,7 +693,7 @@ function agregarAlCarrito(idProducto) {
 }
 
 // Muestra una notificación al usuario
-function mostrarNotificacion(mensaje) {
+const mostrarNotificacion = (mensaje) =>  {
     // Verificar si ya existe una notificación
     let notificacion = document.querySelector('.notification');
 
@@ -715,6 +715,6 @@ function mostrarNotificacion(mensaje) {
 }
 
 // Ponemos en mayúscula la primera letra de un string
-function capitalize(string) {
+const capitalize = (string) =>  {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }

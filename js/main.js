@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Gestiona la reproducción del video de fondo con sistema de fallback
-function initVideoBackground() {
+const initVideoBackground = () =>  {
     const heroVideo = document.getElementById('hero-video');
     const videoContainer = document.querySelector('.video-container');
     const heroSection = document.querySelector('.video-hero');
@@ -25,13 +25,13 @@ function initVideoBackground() {
     if (!heroVideo) return;
 
     // Maneja el éxito de la carga del video
-    function handleVideoSuccess() {
+    const handleVideoSuccess = () => {
         // Añadir clase para indicar que el video está reproduciéndose
         heroSection.classList.add('video-playing');
     }
 
     // Maneja errores de carga o reproducción del video
-    function handleVideoError(error) {
+    const handleVideoError= (error) => {
         // Añadir clase para aplicar el fondo de respaldo
         heroSection.classList.add('video-error');
         // Ocultar el contenedor de video para mostrar el fondo de respaldo
@@ -39,7 +39,7 @@ function initVideoBackground() {
     }
 
     // Comprueba si el video puede reproducirse
-    function checkVideoPlayback() {
+    const checkVideoPlayback = () =>{
         const videoPromise = heroVideo.play();
 
         if (videoPromise !== undefined) {

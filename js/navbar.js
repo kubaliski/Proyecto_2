@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Maneja el cambio de apariencia de la navbar al hacer scroll
-    function handleScroll() {
+    const  handleScroll = () =>  {
         if (window.scrollY > 50) {
             navbar.classList.add('navbar-scrolled');
         } else {
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Configura el scroll hacia abajo al hacer clic en el indicador
-    function setupScrollIndicator() {
+    const setupScrollIndicator = ()  =>  {
         const scrollIndicator = document.querySelector('.scroll-indicator');
         if (scrollIndicator) {
             scrollIndicator.addEventListener('click', function() {
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Gestiona la reproducción del video de fondo
-    function setupVideo() {
+    const setupVideo = () =>  {
         if (heroVideo) {
             // Intenta reproducir el video (puede fallar en dispositivos móviles)
             heroVideo.play().catch(function(error) {
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Inicializa todas las funcionalidades
-    function init() {
+    const init = () =>  {
         // Configurar evento de scroll
         window.addEventListener('scroll', handleScroll);
 

@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Función principal de inicialización
-function initCartPage() {
+const initCartPage = () => {
     // Cargar y asegurar los datos del carrito
     const cartData = loadCartFromStorage();
 
@@ -29,7 +29,7 @@ function initCartPage() {
 }
 
 // Carga el carrito desde localStorage
-function loadCartFromStorage() {
+const loadCartFromStorage = () => {
     const savedCart = localStorage.getItem('cart');
 
     try {
@@ -48,7 +48,7 @@ function loadCartFromStorage() {
 }
 
 // Guarda el carrito en localStorage
-function saveCartToStorage(cart) {
+const saveCartToStorage = (cart) => {
     // Asegurar que el total es un número
     if (cart && typeof cart.total !== 'number') {
         cart.total = parseFloat(cart.total) || 0;
@@ -57,7 +57,7 @@ function saveCartToStorage(cart) {
 }
 
 // Renderiza el carrito completo
-function renderCart(cartData) {
+const renderCart= (cartData) => {
     const cartItemsContainer = document.getElementById('cart-items-container');
     const emptyCartMessage = document.getElementById('empty-cart-message');
     const cartActions = document.getElementById('cart-actions');
@@ -87,7 +87,7 @@ function renderCart(cartData) {
 }
 
 // Actualiza los totales en la interfaz
-function updateTotals(formattedTotal, totalValue) {
+const updateTotals = (formattedTotal, totalValue) => {
     // Actualizar subtotal
     const subtotalElement = document.getElementById('cart-subtotal');
     if (subtotalElement) {
@@ -114,7 +114,7 @@ function updateTotals(formattedTotal, totalValue) {
 }
 
 // Muestra/oculta elementos según si el carrito está vacío
-function toggleEmptyCartUI(isEmpty, emptyCartMessage, cartActions, checkoutBtn) {
+const toggleEmptyCartUI = (isEmpty, emptyCartMessage, cartActions, checkoutBtn) => {
     // Mostrar/ocultar mensaje de carrito vacío
     if (emptyCartMessage) {
         emptyCartMessage.style.display = isEmpty ? 'flex' : 'none';
@@ -139,7 +139,7 @@ function toggleEmptyCartUI(isEmpty, emptyCartMessage, cartActions, checkoutBtn) 
 }
 
 // Renderiza los ítems del carrito
-function renderCartItems(items, container) {
+const renderCartItems= (items, container) => {
     if (!container) return;
 
     // Limpiar contenedor
@@ -159,7 +159,7 @@ function renderCartItems(items, container) {
 }
 
 // Crea un elemento DOM para un ítem del carrito
-function createCartItemElement(item) {
+const createCartItemElement= (item) => {
     const cartItem = document.createElement('div');
     cartItem.className = 'cart-item';
     cartItem.dataset.id = item.id;
@@ -209,13 +209,13 @@ function createCartItemElement(item) {
 }
 
 // Formatea precios con 2 decimales y símbolo €
-function formatPrice(price) {
+const formatPrice= (price) => {
     const numPrice = parseFloat(price);
     return Number.isNaN(numPrice) ? "0.00 €" : `${numPrice.toFixed(2)} €`;
 }
 
 // Configura los eventos del carrito
-function setupCartEvents() {
+const setupCartEvents = () => {
     // Agregar estilos para los controles de cantidad
     addQuantityStyles();
 
@@ -261,7 +261,8 @@ function setupCartEvents() {
 }
 
 // Agrega estilos específicos para los controles de cantidad
-function addQuantityStyles() {
+// ME DABA ERROR al ponerlo en el css , por eso lo puse en el js
+const addQuantityStyles = () =>  {
     const style = document.createElement('style');
     style.id = 'cart-page-specific-styles';
 
@@ -331,7 +332,7 @@ function addQuantityStyles() {
 }
 
 // Actualiza la cantidad de un item
-function updateItemQuantity(itemId, change) {
+const updateItemQuantity = (itemId, change) =>  {
     // Cargar carrito actual
     const cart = loadCartFromStorage();
 
@@ -357,12 +358,12 @@ function updateItemQuantity(itemId, change) {
         updateItemUI(itemId, cart.items[itemIndex].quantity, cart);
 
         // Notificar al usuario
-        mostrarNotificacion('Cantidad actualizada');
+        mostrarNotificacionCarrito('Cantidad actualizada');
     }
 }
 
 // Actualiza la UI de un ítem específico
-function updateItemUI(itemId, newQuantity, cart) {
+const updateItemUI = (itemId, newQuantity, cart) =>  {
     // Actualizar el indicador de cantidad
     const quantityElement = document.querySelector(`.cart-item[data-id="${itemId}"] .cart-item-quantity-number`);
     if (quantityElement) {
@@ -393,7 +394,7 @@ function updateItemUI(itemId, newQuantity, cart) {
 }
 
 // Elimina un item del carrito
-function removeCartItem(itemId) {
+const removeCartItem = (itemId) =>  {
     // Cargar carrito actual
     const cart = loadCartFromStorage();
 
@@ -422,11 +423,11 @@ function removeCartItem(itemId) {
     updateNavbarCartCount();
 
     // Notificar al usuario
-    mostrarNotificacion('Producto eliminado del carrito');
+    mostrarNotificacionCarrito('Producto eliminado del carrito');
 }
 
 // Recalcula el total del carrito
-function recalculateCartTotal(cart) {
+const recalculateCartTotal =  (cart)  =>  {
     // Asegurar que items es un array
     if (!Array.isArray(cart.items)) {
         cart.items = [];
@@ -443,7 +444,7 @@ function recalculateCartTotal(cart) {
 }
 
 // Vacía completamente el carrito
-function clearCart() {
+const  clearCart = () =>  {
     if (confirm('¿Estás seguro de que quieres vaciar el carrito?')) {
         // Crear carrito vacío
         const emptyCart = { items: [], total: 0 };
@@ -468,18 +469,18 @@ function clearCart() {
         updateNavbarCartCount();
 
         // Notificar al usuario
-        mostrarNotificacion('Carrito vaciado');
+        mostrarNotificacionCarrito('Carrito vaciado');
     }
 }
 
 // Procede al checkout (simulación)
-function proceedToCheckout() {
+const  proceedToCheckout = () =>  {
     alert('Esta funcionalidad estaría conectada con una pasarela de pago real. Por ahora, gracias por tu compra simulada.');
     // Aquí se podría redirigir: window.location.href = 'checkout.html';
 }
 
 // Muestra una notificación al usuario
-function mostrarNotificacion(mensaje) {
+const  mostrarNotificacionCarrito = (mensaje) =>  {
     // Eliminar notificación existente si hay
     const notificacionExistente = document.querySelector('.notification');
     if (notificacionExistente) {
@@ -512,7 +513,7 @@ function mostrarNotificacion(mensaje) {
 }
 
 // Actualiza el contador del carrito en la navbar
-function updateNavbarCartCount() {
+const  updateNavbarCartCount = () =>  {
     const cartData = loadCartFromStorage();
 
     // Calcular total de items
@@ -528,7 +529,7 @@ function updateNavbarCartCount() {
     }
 }
 
-// Actualizar el contador cuando la navbar esté lista
+// Actualizamos el contador cuando la navbar esté lista
 document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('navbarReady', updateNavbarCartCount);
 });
