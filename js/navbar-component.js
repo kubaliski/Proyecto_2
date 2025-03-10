@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         playButton.innerHTML = 'Reproducir video';
                         playButton.addEventListener('click', () => {
                             heroVideo.play();
-                            this.remove();
+                            playButton.remove();
                         });
                         heroContent.prepend(playButton);
                     }
@@ -370,7 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Configurar eventos para los resultados
                 document.querySelectorAll('.search-result-item').forEach(item => {
                     item.addEventListener('click', () =>{
-                        const id = this.dataset.id;
+                        const id = item.dataset.id;
                         window.location.href = `producto.html?id=${id}`;
                     });
                 });
@@ -408,8 +408,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Búsqueda en tiempo real
-        searchInput.addEventListener('input', ()=> {
-            performSearch(this.value);
+        searchInput.addEventListener('input', (e) => {
+            performSearch(e.target.value);
         });
 
         // Evitar recarga al enviar el formulario
@@ -633,7 +633,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Botones de aumentar cantidad
             document.querySelectorAll('.increase-quantity').forEach(button => {
                 button.addEventListener('click', () =>{
-                    const id = this.dataset.id;
+                    const id = button.dataset.id;
                     updateItemQuantity(id, 1);
                 });
             });
@@ -641,7 +641,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Botones de disminuir cantidad
             document.querySelectorAll('.decrease-quantity').forEach(button => {
                 button.addEventListener('click', ()=> {
-                    const id = this.dataset.id;
+                    const id = button.dataset.id;
                     updateItemQuantity(id, -1);
                 });
             });
@@ -649,7 +649,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Botones de eliminar elemento
             document.querySelectorAll('.cart-item-remove').forEach(button => {
                 button.addEventListener('click', ()  =>{
-                    const id = this.dataset.id;
+                    const id = button.dataset.id;
                     removeFromCart(id);
                 });
             });
@@ -787,14 +787,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     e.preventDefault();
 
                     // Obtener datos del producto desde el data-attribute
-                    const productId = this.dataset.id;
+                    const productId = button.dataset.id;
 
                     // Crear objeto de producto con los datos disponibles
                     const product = {
                         id: productId,
-                        name: this.dataset.name || 'Zapatilla',
-                        price: parseFloat(this.dataset.price) || 99.99,
-                        image: this.dataset.image || 'assets/products/shoe-placeholder.png'
+                        name: button.dataset.name || 'Zapatilla',
+                        price: parseFloat(button.dataset.price) || 99.99,
+                        image: button.dataset.image || 'assets/products/shoe-placeholder.png'
                     };
 
                     // Añadir al carrito

@@ -92,8 +92,8 @@ const populateProductPage = (producto) =>  {
         mainImage.alt = producto.nombre;
 
         // Imagen de respaldo si hay error
-        mainImage.onerror = ( ) =>{
-            this.src = 'assets/products/shoe-placeholder.png';
+        mainImage.onerror = () => {
+            mainImage.src = 'assets/products/shoe-placeholder.png';
         };
     }
 

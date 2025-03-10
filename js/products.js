@@ -615,8 +615,8 @@ const setupOrdenamiento = () =>  {
     const sortSelect = document.getElementById('sort-select');
     if (!sortSelect) return;
 
-    sortSelect.addEventListener('change', ()=> {
-        currentSort = this.value;
+    sortSelect.addEventListener('change', (e) => {
+        currentSort = e.target.value;
         aplicarFiltros();
     });
 }

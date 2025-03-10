@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
                     playButton.innerHTML = 'Reproducir video';
                     playButton.addEventListener('click', () =>{
                         heroVideo.play();
-                        this.remove();
+                        playButton.remove();
                     });
                     heroContent.prepend(playButton);
                 }
