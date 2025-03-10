@@ -6,7 +6,7 @@
  *
  */
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     initProducts();
     setupFilterDrawer();
 });
@@ -193,7 +193,7 @@ const setupFilterDrawer = () =>  {
 
     // Eventos para el drawer de filtros
     if (filterToggle) {
-        filterToggle.addEventListener('click', function(e) {
+        filterToggle.addEventListener('click', (e) => {
             e.preventDefault();
             openFilterDrawer();
         });
@@ -212,13 +212,13 @@ const setupFilterDrawer = () =>  {
     }
 
     if (filtersDrawerClose) {
-        filtersDrawerClose.addEventListener('click', function() {
+        filtersDrawerClose.addEventListener('click', () => {
             closeFilterDrawer();
         });
     }
 
     if (menuOverlay) {
-        menuOverlay.addEventListener('click', function() {
+        menuOverlay.addEventListener('click', ()  =>{
             // Cerrar el drawer de filtros si está abierto
             if (filtersDrawer.classList.contains('active')) {
                 closeFilterDrawer();
@@ -227,7 +227,7 @@ const setupFilterDrawer = () =>  {
     }
 
     if (applyFiltersBtn) {
-        applyFiltersBtn.addEventListener('click', function(e) {
+        applyFiltersBtn.addEventListener('click', (e) => {
             e.preventDefault();
             aplicarFiltros();
             closeFilterDrawer();
@@ -236,12 +236,12 @@ const setupFilterDrawer = () =>  {
 }
 
 // Inicialización diferida para asegurar que todos los elementos están cargados
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     // Las funciones originales se mantienen
     initProducts();
 
     // Ejecutar setupFilterDrawer después de un pequeño retraso
-    setTimeout(function() {
+    setTimeout(() => {
         setupFilterDrawer();
     }, 100);
 });
@@ -318,7 +318,7 @@ const renderProductos = (productos) =>  {
         // Añadir evento al botón de carrito
         const addButton = tempDiv.querySelector('.product-add-cart');
         if (addButton) {
-            addButton.addEventListener('click', function(e) {
+            addButton.addEventListener('click', (e) => {
                 e.preventDefault();
                 agregarAlCarrito(producto.id);
             });
@@ -400,7 +400,7 @@ const setupFiltros = () =>  {
     // Botón para limpiar filtros
     const limpiarFiltrosBtn = document.getElementById('clear-filters');
     if (limpiarFiltrosBtn) {
-        limpiarFiltrosBtn.addEventListener('click', function(e) {
+        limpiarFiltrosBtn.addEventListener('click', (e) =>{
             e.preventDefault();
             filtrosForm.reset();
 
@@ -615,7 +615,7 @@ const setupOrdenamiento = () =>  {
     const sortSelect = document.getElementById('sort-select');
     if (!sortSelect) return;
 
-    sortSelect.addEventListener('change', function() {
+    sortSelect.addEventListener('change', ()=> {
         currentSort = this.value;
         aplicarFiltros();
     });

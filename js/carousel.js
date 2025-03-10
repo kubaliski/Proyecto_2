@@ -6,7 +6,7 @@
  *
  */
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     // Elementos del carrusel
     const carousel = document.getElementById('city-carousel');
     const items = carousel ? carousel.querySelectorAll('.carousel-item') : [];
@@ -34,14 +34,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Configurar eventos para los botones de navegación
     if (prevButton) {
-        prevButton.addEventListener('click', function() {
+        prevButton.addEventListener('click', () => {
             currentIndex = (currentIndex - 1 + itemCount) % itemCount;
             updateCarousel();
         });
     }
 
     if (nextButton) {
-        nextButton.addEventListener('click', function() {
+        nextButton.addEventListener('click', () => {
             currentIndex = (currentIndex + 1) % itemCount;
             updateCarousel();
         });
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Configurar eventos para los indicadores (dots)
     dots.forEach((dot, index) => {
-        dot.addEventListener('click', function() {
+        dot.addEventListener('click', () => {
             currentIndex = index;
             updateCarousel();
         });
@@ -59,11 +59,11 @@ document.addEventListener('DOMContentLoaded', function() {
     let touchStartX = 0;
     let touchEndX = 0;
 
-    carousel.addEventListener('touchstart', function(e) {
+    carousel.addEventListener('touchstart', (e) => {
         touchStartX = e.changedTouches[0].screenX;
     });
 
-    carousel.addEventListener('touchend', function(e) {
+    carousel.addEventListener('touchend', (e) => {
         touchEndX = e.changedTouches[0].screenX;
         handleSwipe();
     });

@@ -6,7 +6,7 @@
  *
  */
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', ()=> {
     // Elementos del DOM
     const navbar = document.getElementById('navbar');
     const heroVideo = document.getElementById('hero-video');
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const setupScrollIndicator = ()  =>  {
         const scrollIndicator = document.querySelector('.scroll-indicator');
         if (scrollIndicator) {
-            scrollIndicator.addEventListener('click', function() {
+            scrollIndicator.addEventListener('click', ()=> {
                 const heroHeight = document.querySelector('.video-hero').offsetHeight;
                 window.scrollTo({
                     top: heroHeight - 50,
@@ -43,14 +43,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const setupVideo = () =>  {
         if (heroVideo) {
             // Intenta reproducir el video (puede fallar en dispositivos móviles)
-            heroVideo.play().catch(function(error) {
+            heroVideo.play().catch((error) => {
                 // Añadir un botón para reproducir en móviles si es necesario
                 const heroContent = document.querySelector('.hero-content');
                 if (heroContent && !document.querySelector('.video-play-btn')) {
                     const playButton = document.createElement('button');
                     playButton.className = 'video-play-btn';
                     playButton.innerHTML = 'Reproducir video';
-                    playButton.addEventListener('click', function() {
+                    playButton.addEventListener('click', () =>{
                         heroVideo.play();
                         this.remove();
                     });

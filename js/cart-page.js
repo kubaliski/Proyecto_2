@@ -7,7 +7,7 @@
  *
  */
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     // Inicialización del carrito al cargar la página
     initCartPage();
 });
@@ -220,7 +220,7 @@ const setupCartEvents = () => {
     addQuantityStyles();
 
     // Delegación de eventos para botones de cantidad y eliminar
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', (e) => {
         // Botón aumentar cantidad
         if (e.target.closest('.increase-quantity')) {
             const button = e.target.closest('.increase-quantity');
@@ -530,6 +530,6 @@ const  updateNavbarCartCount = () =>  {
 }
 
 // Actualizamos el contador cuando la navbar esté lista
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('navbarReady', updateNavbarCartCount);
 });

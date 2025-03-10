@@ -5,7 +5,7 @@
  * y gestiona la funcionalidad del formulario de newsletter.
  */
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     // Seleccionar el footer para insertar el contenido
     const footer = document.querySelector('.site-footer');
 
@@ -109,13 +109,13 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Configura el formulario de newsletter y su comportamiento
-const  setupNewsletterForm  = () =>  {
+const setupNewsletterForm = () =>  {
     const newsletterForm = document.querySelector('.newsletter-form');
     if (!newsletterForm) return;
 
-    newsletterForm.addEventListener('submit', function(e) {
+    newsletterForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const emailInput = this.querySelector('input[type="email"]');
+        const emailInput = e.target.querySelector('input[type="email"]');
 
         if (emailInput && emailInput.value) {
             // Procesar la suscripción
@@ -128,10 +128,10 @@ const  setupNewsletterForm  = () =>  {
             emailInput.value = '';
         }
     });
-}
+};
 
 // Muestra una notificación al usuario
-const mostrarNotificacionFooter= (mensaje)  => {
+const mostrarNotificacionFooter = (mensaje) => {
     // Verificar si ya existe una notificación y eliminarla
     let notificacionExistente = document.querySelector('.notification');
     if (notificacionExistente) {
@@ -159,6 +159,6 @@ const mostrarNotificacionFooter= (mensaje)  => {
         // Eliminar el elemento del DOM después de la transición
         setTimeout(() => {
             notificacion.remove();
-        }, 300); // 300ms es la duración de la transición
+        }, 300);
     }, 3000);
-}
+};

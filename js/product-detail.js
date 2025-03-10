@@ -6,7 +6,7 @@
  *
  */
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', ()=> {
     initProductDetail();
 });
 
@@ -92,7 +92,7 @@ const populateProductPage = (producto) =>  {
         mainImage.alt = producto.nombre;
 
         // Imagen de respaldo si hay error
-        mainImage.onerror = function() {
+        mainImage.onerror = ( ) =>{
             this.src = 'assets/products/shoe-placeholder.png';
         };
     }
@@ -257,7 +257,7 @@ const setupProductEvents = () =>  {
 
     // Evento para disminuir cantidad
     if (decreaseBtn && quantityInput) {
-        decreaseBtn.addEventListener('click', function() {
+        decreaseBtn.addEventListener('click', ()=> {
             const currentValue = parseInt(quantityInput.value);
             if (currentValue > 1) {
                 quantityInput.value = currentValue - 1;
@@ -267,7 +267,7 @@ const setupProductEvents = () =>  {
 
     // Evento para aumentar cantidad
     if (increaseBtn && quantityInput) {
-        increaseBtn.addEventListener('click', function() {
+        increaseBtn.addEventListener('click', ()=> {
             const currentValue = parseInt(quantityInput.value);
             // No permitir aumentar más allá del stock disponible
             if (currentValue < producto.stock) {
@@ -281,20 +281,20 @@ const setupProductEvents = () =>  {
     // Configurar el botón de añadir al carrito
     const addToCartBtn = document.getElementById('add-to-cart');
     if (addToCartBtn) {
-        addToCartBtn.addEventListener('click', function() {
+        addToCartBtn.addEventListener('click', ()=> {
             addProductToCart();
         });
     }
 
     // Validación para el input de cantidad
     if (quantityInput) {
-        quantityInput.addEventListener('change', function() {
-            let value = parseInt(this.value);
+        quantityInput.addEventListener('change', () =>{
+            let value = parseInt(quantityInput.value);
 
             if (isNaN(value) || value < 1) {
-                this.value = 1;
+                quantityInput.value = 1;
             } else if (value > producto.stock) {
-                this.value = producto.stock;
+                quantityInput.value = producto.stock;
                 mostrarNotificacionDetail(`Solo hay ${producto.stock} unidades disponibles`);
             }
         });

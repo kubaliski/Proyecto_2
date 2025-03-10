@@ -6,7 +6,7 @@
  *
  */
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     // Elemento donde se insertará la navbar
     const navbarContainer = document.getElementById('navbar');
 
@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isHomePage) {
             const scrollIndicator = document.querySelector('.scroll-indicator');
             if (scrollIndicator) {
-                scrollIndicator.addEventListener('click', function() {
+                scrollIndicator.addEventListener('click', () => {
                     const heroHeight = document.querySelector('.video-hero').offsetHeight;
                     window.scrollTo({
                         top: heroHeight - 50,
@@ -244,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (isHomePage) {
             const heroVideo = document.getElementById('hero-video');
             if (heroVideo) {
-                heroVideo.play().catch(function(error) {
+                heroVideo.play().catch((error)=> {
                     console.log('Auto-play impedido:', error);
 
                     // Añadir botón para reproducir en móviles si es necesario
@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         const playButton = document.createElement('button');
                         playButton.className = 'video-play-btn';
                         playButton.innerHTML = 'Reproducir video';
-                        playButton.addEventListener('click', function() {
+                        playButton.addEventListener('click', () => {
                             heroVideo.play();
                             this.remove();
                         });
@@ -280,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Abrir/cerrar el buscador
-        function toggleSearch(e) {
+        const toggleSearch = (e)=> {
             if (e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -369,7 +369,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Configurar eventos para los resultados
                 document.querySelectorAll('.search-result-item').forEach(item => {
-                    item.addEventListener('click', function() {
+                    item.addEventListener('click', () =>{
                         const id = this.dataset.id;
                         window.location.href = `producto.html?id=${id}`;
                     });
@@ -378,7 +378,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Configurar evento para "Ver todos los resultados"
                 const viewAllResults = document.querySelector('.view-all-results');
                 if (viewAllResults) {
-                    viewAllResults.addEventListener('click', function() {
+                    viewAllResults.addEventListener('click', ()=> {
                         // Aplicar los filtros de búsqueda y cerrar el dropdown
                         if (typeof window.aplicarFiltrosBusqueda === 'function') {
                             window.aplicarFiltrosBusqueda(query);
@@ -403,19 +403,19 @@ document.addEventListener('DOMContentLoaded', function() {
         searchOverlay.addEventListener('click', closeSearch);
 
         // Evitar que los clics dentro del dropdown propaguen al documento
-        searchDropdown.addEventListener('click', function(e) {
+        searchDropdown.addEventListener('click', (e) => {
             e.stopPropagation();
         });
 
         // Búsqueda en tiempo real
-        searchInput.addEventListener('input', function() {
+        searchInput.addEventListener('input', ()=> {
             performSearch(this.value);
         });
 
         // Evitar recarga al enviar el formulario
         const searchForm = searchDropdown.querySelector('.search-form');
         if (searchForm) {
-            searchForm.addEventListener('submit', function(e) {
+            searchForm.addEventListener('submit', (e)=> {
                 e.preventDefault();
                 const query = searchInput.value;
                 if (query.trim() !== '') {
@@ -426,7 +426,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Exponer API para usar desde otros scripts
         window.searchAPI = {
-            open: function() {
+            open: ()=> {
                 searchDropdown.classList.add('active');
                 searchOverlay.classList.add('active');
                 document.body.classList.add('search-open');
@@ -486,13 +486,13 @@ document.addEventListener('DOMContentLoaded', function() {
         userOverlay.addEventListener('click', closeUserDropdown);
 
         // Evitar que los clics dentro del dropdown se propaguen
-        userDropdown.addEventListener('click', function(e) {
+        userDropdown.addEventListener('click', (e) =>{
             e.stopPropagation();
         });
 
         // Exponer API para uso externo
         window.userAPI = {
-            open: function() {
+            open: () =>{
                 userDropdown.classList.add('active');
                 userOverlay.classList.add('active');
                 document.body.classList.add('user-open');
@@ -632,7 +632,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const setupQuantityButtons = () =>  {
             // Botones de aumentar cantidad
             document.querySelectorAll('.increase-quantity').forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', () =>{
                     const id = this.dataset.id;
                     updateItemQuantity(id, 1);
                 });
@@ -640,7 +640,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Botones de disminuir cantidad
             document.querySelectorAll('.decrease-quantity').forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', ()=> {
                     const id = this.dataset.id;
                     updateItemQuantity(id, -1);
                 });
@@ -648,7 +648,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Botones de eliminar elemento
             document.querySelectorAll('.cart-item-remove').forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', ()  =>{
                     const id = this.dataset.id;
                     removeFromCart(id);
                 });
@@ -783,7 +783,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Configurar botones de añadir al carrito en productos de la página
         const setupAddToCartButtons = () =>  {
             document.querySelectorAll('.product-add-cart').forEach(button => {
-                button.addEventListener('click', function(e) {
+                button.addEventListener('click', (e) => {
                     e.preventDefault();
 
                     // Obtener datos del producto desde el data-attribute
@@ -815,7 +815,7 @@ document.addEventListener('DOMContentLoaded', function() {
             cartOverlay.addEventListener('click', closeCart);
 
             // Evitar que clics en el dropdown se propaguen
-            cartDropdown.addEventListener('click', function(e) {
+            cartDropdown.addEventListener('click', (e) => {
                 e.stopPropagation();
             });
         }
@@ -831,7 +831,7 @@ document.addEventListener('DOMContentLoaded', function() {
             updateItemQuantity,
             removeFromCart,
             getCart: () => cart,
-            openCart: function() {
+            openCart: ()=> {
                 // Solo funciona si no estamos en la página de carrito
                 if (!isCartPage && cartDropdown) {
                     cartDropdown.classList.add('active');
@@ -840,7 +840,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     renderCart();
                 }
             },
-            closeCart: function() {
+            closeCart: () => {
                 // Solo funciona si no estamos en la página de carrito
                 if (!isCartPage && cartDropdown) {
                     cartDropdown.classList.remove('active');
@@ -848,7 +848,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.body.classList.remove('cart-open');
                 }
             },
-            toggleCart: function(e) {
+            toggleCart: (e) => {
                 // Solo funciona si no estamos en la página de carrito
                 if (!isCartPage && cartDropdown) {
                     toggleCart(e);
@@ -872,7 +872,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (filterToggle && filtersDrawer && filtersDrawerClose && menuOverlay) {
                 // Abrir filtros desde navbar
-                filterToggle.addEventListener('click', function(e) {
+                filterToggle.addEventListener('click', (e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     filtersDrawer.classList.toggle('active');
@@ -882,7 +882,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Abrir filtros desde botón móvil (si existe)
                 if (mobileFilterButton) {
-                    mobileFilterButton.addEventListener('click', function(e) {
+                    mobileFilterButton.addEventListener('click', (e) => {
                         e.preventDefault();
                         filtersDrawer.classList.toggle('active');
                         menuOverlay.classList.toggle('active');
@@ -891,13 +891,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
 
                 // Cerrar filtros
-                filtersDrawerClose.addEventListener('click', function() {
+                filtersDrawerClose.addEventListener('click', () => {
                     filtersDrawer.classList.remove('active');
                     menuOverlay.classList.remove('active');
                     document.body.classList.remove('no-scroll');
                 });
 
-                menuOverlay.addEventListener('click', function() {
+                menuOverlay.addEventListener('click', ()=> {
                     filtersDrawer.classList.remove('active');
                     menuOverlay.classList.remove('active');
                     document.body.classList.remove('no-scroll');

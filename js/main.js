@@ -9,7 +9,7 @@
  */
 
 // Inicialización cuando el DOM está cargado
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     // Gestión del video de fondo
     initVideoBackground();
 
@@ -31,7 +31,7 @@ const initVideoBackground = () =>  {
     }
 
     // Maneja errores de carga o reproducción del video
-    const handleVideoError= (error) => {
+    const handleVideoError = (error) => {
         // Añadir clase para aplicar el fondo de respaldo
         heroSection.classList.add('video-error');
         // Ocultar el contenedor de video para mostrar el fondo de respaldo
@@ -39,7 +39,7 @@ const initVideoBackground = () =>  {
     }
 
     // Comprueba si el video puede reproducirse
-    const checkVideoPlayback = () =>{
+    const checkVideoPlayback = () => {
         const videoPromise = heroVideo.play();
 
         if (videoPromise !== undefined) {
@@ -57,15 +57,16 @@ const initVideoBackground = () =>  {
                         const playButton = document.createElement('button');
                         playButton.className = 'video-play-btn';
                         playButton.innerHTML = 'Reproducir video';
-                        playButton.addEventListener('click', function() {
+                        playButton.setAttribute('aria-label', 'Reproducir video de fondo');
+                        playButton.addEventListener('click', () => {
                             heroVideo.play()
                                 .then(() => {
                                     handleVideoSuccess();
-                                    this.remove();
+                                    playButton.remove();
                                 })
                                 .catch(err => {
                                     handleVideoError(err);
-                                    this.remove();
+                                    playButton.remove();
                                 });
                         });
                         heroContent.prepend(playButton);
@@ -79,17 +80,17 @@ const initVideoBackground = () =>  {
         } else {
             // El navegador no soporta promesas para video.play()
             // (navegadores muy antiguos)
-            handleVideoSuccess(); // Asumimos que funciona
+            handleVideoSuccess(); // Se asume  que va a funcionar
         }
     }
 
     // Configurar eventos para el video
-    heroVideo.addEventListener('canplaythrough', function() {
+    heroVideo.addEventListener('canplaythrough', () => {
         // El video se ha cargado y puede reproducirse
         checkVideoPlayback();
     });
 
-    heroVideo.addEventListener('error', function(e) {
+    heroVideo.addEventListener('error', (e) => {
         // Error al cargar el video
         handleVideoError(e);
     });
